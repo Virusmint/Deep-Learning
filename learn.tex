@@ -1,0 +1,209 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{amsmath,amsfonts,amssymb} % Math packages
+\usepackage{mathtools} % For defining floor and ceiling functions
+\usepackage{amsthm}    % Theorems
+\usepackage{bm} 	   % Bold math
+\usepackage{bbm}	   % More bold math?
+\usepackage{array}     % Better tables
+\usepackage{chemfig}   % chemical figures
+\usepackage{physics}   % derivatives and partials
+\usepackage{float}     % Better positioning [H]
+\usepackage{framed}    % Framed boxes
+\usepackage{geometry}  % Required for adjusting page dimensions and margins
+\usepackage{graphicx}  % Include images
+\usepackage{multirow}  % multicolumn tables
+\usepackage{pgfplots}  % Create plots in latex
+\usepackage{siunitx}   % SI unit system
+\usepackage{listings}  % Code environments
+\usepackage[shortlabels]{enumitem} %lets us change the enumeration to (a), (b), ...
+\usepackage{booktabs}  % Better looking horizontal rules
+\usepackage{makecell}  % Pre-formatting of column heads
+\usepackage{hyperref}  % Clickable links
+\renewcommand{\arraystretch}{1.6}
+
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+\pgfplotsset{width=10cm,compat=1.9}
+
+% stats commands
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\mathbb{V}\mathrm{ar}}
+\newcommand{\Cov}{\mathbb{C}\mathrm{ov}}
+\newcommand{\Risk}{\mathcal{R}}
+
+% common number sets
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\C}{\mathbb{C}}
+
+% Cs stuff
+\newcommand{\bigO}{\mathcal{O}}
+
+% Indicator function
+\newcommand{\Ind}[1]{\mathbbm{1}_{\{#1\}}}
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\DeclarePairedDelimiter\angleb{\langle}{\rangle}
+
+\geometry{
+	paper=a4paper, % Paper size, change to letterpaper for US letter size
+	top=2.5cm, % Top margin
+	bottom=2.5cm, % Bottom margin
+	left=2.5cm, % Left margin
+	right=2.5cm, % Right margin
+	headheight=14pt, % Header height
+	footskip=1.5cm, % Space from the bottom margin to the baseline of the footer
+	headsep=1.2cm, % Space from the top margin to the baseline of the header
+}
+
+\lstset{
+	basicstyle=\ttfamily,
+	mathescape,
+	inputencoding=utf8,
+	escapeinside={\%*}{*)},
+	literate={á}{{\'a}}1 {ã}{{\~a}}1 {é}{{\'e}}1 {É}{{\'E}}1 {è}{{\`e}}1 {à}{{\`a}}1,
+	numbers=left,
+	breaklines=true
+}
+
+\let\tss\textsuperscript % superscript macro
+\let\oldtextbf\textbf
+\renewcommand{\textbf}[1]{\oldtextbf{\boldmath #1}}
+
+\newtheorem{exercise}{Exercise}[section]
+
+\begin{document}
+\title{Deep Learning}
+\author{David Zhao}
+\date{Febrary 9, 2023}
+\maketitle
+
+\subsection*{Preface}
+This paper is a learning documentaion which follows the book \href{https://d2l.ai/}{Dive into Deep learning}.
+
+\subsection*{Preliminaries}
+\subsubsection*{Linear Algebra}
+
+
+
+
+\subsection*{Linear Regression}
+    We assume that the relationship between features $\vec{x}$ and target $y$ is approximately linear, i.e,
+    \begin{equation}
+        E[Y|X=\vec{x}] = x_1w_1 + \ldots + x_dw_d + b \\
+    \end{equation}
+    where $d$ is the \textit{feature dimensionality}, and $b$ is the \textit{bias}. As such,
+    \begin{equation}
+        \hat{y} = \vec{w}^T\vec{x} + b
+                = X\vec{w} + b
+    \end{equation}
+    In essence, our goal is to find parameters $\vec{w}$ and $b$ such that our prediction error is 
+    minimized for new data examples that are sampled from the same distribution X.
+
+    \subsubsection*{Loss Function}
+    Naturally, our model requires an objective measure of how well it fits the training data.
+    Loss functions play this role by quantifying the distance between the \textit{observed} and \textit{predicted}
+    labels. The most commonly used loss function is the squared error.
+    \begin{equation}
+        l^{(i)}(\vec{w},b) = \frac{1}{2}(\hat{y}^{(i)}-\vec{y}^{(i)})^2
+    \end{equation}
+    Note that the constant coefficient $\frac{1}{2}$ is only notationally convenient as it disappears when we
+    take the derivative of the loss function. Furthermore, large differences between estimates $\hat{y}^{(i)}$ 
+    and targets $\vec{y}^{(i)}$ lead to larger contributions due to the function's quadratic form. In fact, while
+    it does encourage our model to avoid sizeable errors, it also yields an excessive sensitivity to anomalous data.
+    Finally, to evaluate our model's performance over entire dataset of $n$ examples, we simply take the average of 
+    the losses on the training set:
+    \begin{equation}
+        L^{(i)}(\vec{w},b) = \frac{1}{n}\sum_{i=1}^{n}\frac{1}{2}(\hat{y}^{(i)}-\vec{y}^{(i)})^2
+    \end{equation}
+    Clearly, our goal is to find parameters $\vec{w}^*$ and $b^*$ to minimize the total loss across all examples.
+
+    \subsubsection*{Minibatch Stochastic Gradient Descent}
+    \begin{equation*}
+        \begin{aligned}
+        (\vec{w},b) &\leftarrow (\vec{w},b) - \frac{\eta}{|\beta|}\sum_{i\in\beta_i}\frac{\partial}{\partial(\vec{w},b)}l^{(i)}(\vec{w},b) \\
+        \vec{w}     &\leftarrow \vec{w} - \frac{\eta}{|\beta|}\sum_{i\in\beta_i}\frac{\partial}{\partial\vec{w}}l^{(i)}(\vec{w},b) = \vec{w}- \frac{\eta}{|\beta|}\sum_{i\in\beta_i}\vec{x}^{(i)}(\vec{w}^T\vec{x}^{(i)} + b - \vec{y}^{(i)}) \\
+        b           &\leftarrow b - \frac{\eta}{|\beta|}\sum_{i\in\beta_i}\frac{\partial}{\partial b}l^{(i)}(\vec{w},b) = \vec{w}- \frac{\eta}{|\beta|}\sum_{i\in\beta_i}(\vec{w}^T\vec{x}^{(i)} + b - \vec{y}^{(i)})
+        \end{aligned}
+    \end{equation*}
+
+    \subsubsection*{Normal Distribution and Squared Loss}
+    Recall
+    \begin{equation*}
+        \begin{aligned}
+            p(x) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp({-\frac{1}{2\sigma^2}(x-\mu)^2})
+        \end{aligned}
+    \end{equation*}
+    Assume observations arise from noisy measurements
+    \begin{equation*}
+        \begin{aligned}
+            y = \vec{w}^T\vec{x} + b + \epsilon
+        \end{aligned}
+    \end{equation*}
+
+    \begin{equation*}
+        \begin{aligned}
+            p(x) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp({-\frac{1}{2\sigma^2}(y - \vec{w}^T\vec{x} - b)^2})
+        \end{aligned}
+    \end{equation*}
+
+    \begin{equation*}
+        \begin{aligned}
+            P(y|X) = \prod_{i=1}^{n}P(\vec{y}^{(i)}|\vec{x}^{(i)})
+        \end{aligned}
+    \end{equation*}
+    since all pairs $(\vec{y}^{(i)},\vec{x}^{(i)})$ were drawn independently. But, maximizing the product of exponential
+    functions is tedious. Instead, we minimize the negative log-likelihood:
+    \begin{equation*}
+        \begin{aligned}
+            -\log(y|X) &= -log(\prod_{i=1}^{n}P(\vec{y}^{(i)}|\vec{x}^{(i)})) \\
+                       &= \sum_{i=1}^{n} \frac{1}{2}\log(2\pi\sigma^2) + \frac{1}{2\sigma^2}(\vec{y}^{(i)}-\vec{w}^T\vec{x}^{(i)} - b)^2
+        \end{aligned}
+    \end{equation*}
+    As such, it follows that minimizing the square error loss is equivalent to the maximum likelihood estimation of a linear model 
+    under additive Gaussian noise.
+
+\subsection*{Generalization}
+    The phenomenon of our model fitting closer to the training model than to the underlying distribution is called \textit{overfitting}.
+    Instead, our goal is to train our model in such a way that it may find a generalizable pattern and make correct
+    predictions about previously unseen data.
+    \subsubsection*{Training Error \& Generalization Error}
+    In standard supervised learning setting, we assume the training and testing data to be drawn independently from
+    identical distributions (i.e. \textit{IID} assumption).
+    Training error ($R_{emp}$) is a statistic calculated on the training dataset:
+    \begin{equation*}
+        \begin{aligned}
+           R_{emp}[X,\vec{y},f] = \frac{1}{n}\sum_{i=1}^{n}l(\vec{x}^{(i)},\vec{y}^{(i)},f(\vec{x})^{(i)})
+        \end{aligned}
+    \end{equation*}
+    Generalization error ($R$) is an expectation taken with respect to the underlying distribution:
+    \begin{equation*}
+        \begin{aligned}
+           R[p,f] = E_{(\vec{x},y)\sim P[l(\vec{x},y,f{\vec{x}})]} = \int\int l(\vec{x},y,f(\vec{x}))p(\vec{x},y)d\vec{x}dy
+         \end{aligned}
+    \end{equation*}
+    Note that we can never measure $R$ exactly since the density function $p(\vec{x},y)$ has a form that cannot
+    be precisely known. Moreover, since we cannot sample an infinite stream of data points, we must resort to estimating
+    the generalization error by applying our model to an independent test set that is withheld from our training set.
+    \subsubsection*{Model Complexity}
+    Intuitively, when we have simple models mixed with abundant data, the training and generalization error tend to be close.
+    Conversely, we can expect more a complex model and/or fewer examples to cause our training error to diminish, but the
+    generalization error to grow. Error on the holdout data, i.e. the validation set, is called the validation error.
+    
+    \subsubsection*{Polynomial Curve Fitting}
+    \subsubsection*{Cross Validation}
+
+    \subsection*{Weight Decay}
+    Recall that we can always mitigate overfitting by collecting more training data. However, gathering more data is often costly, time consuming,
+    etc. Therefore, we introduce our first \textit{regularization} technique known as \textit{weight decay}.
+    
+    Note that we may also limit model complexity by tweaking the degree of our fitted polynomial. However, even small
+    changes in degree can dramatically increase model complexity, hence motivating the use of weight decay.
+
+    \subsubsection*{Norms \& Weight Decay}
+
+
+\end{document}
