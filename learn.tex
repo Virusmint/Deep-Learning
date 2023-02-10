@@ -204,6 +204,20 @@ This paper is a learning documentaion which follows the book \href{https://d2l.a
     changes in degree can dramatically increase model complexity, hence motivating the use of weight decay.
 
     \subsubsection*{Norms \& Weight Decay}
+    \begin{equation*}
+        \begin{aligned}
+            \vec{w}     &\leftarrow (1-\eta\lambda)\vec{w} - \frac{\eta}{|\beta|}\sum_{i\in\beta_i}\frac{\partial}{\partial\vec{w}}l^{(i)}(\vec{w},b) = \vec{w}- \frac{\eta}{|\beta|}\sum_{i\in\beta_i}\vec{x}^{(i)}(\vec{w}^T\vec{x}^{(i)} + b - \vec{y}^{(i)}) \\
+        \end{aligned}
+    \end{equation*}
+
+\section*{Linear Neural Networks for Classification}
+    \subsection*{Softmax Regression}
 
 
+    \begin{equation*}
+        \begin{aligned}
+             = \hat{y}_i = \frac{\exp(o_i)}{\sum_{j}\exp(o_j)}
+        \end{aligned}
+    \end{equation*}
+    
 \end{document}

@@ -1154,6 +1154,8 @@ INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy8.tfm
 INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm
 INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmti12.tfm
 INPUT c:/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmr17.tfm
+INPUT c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT learn.aux
 INPUT ./learn.out
 INPUT ./learn.out
