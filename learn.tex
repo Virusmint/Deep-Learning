@@ -82,13 +82,29 @@
 \maketitle
 
 \subsection*{Preface}
-This paper is a learning documentaion which follows the book \href{https://d2l.ai/}{Dive into Deep learning}.
-
+This paper is a learning documentation which follows the book \href{https://d2l.ai/}{Dive into Deep learning}.
+It must be noted that coding instructions are excluded.
 \subsection*{Preliminaries}
-\subsubsection*{Linear Algebra}
+    \subsubsection*{Linear Algebra}
 
+    \subsubsection*{Chain Rule}
+    Let $y = f(\vec{u})$ such that $\forall i, \vec{u}_i = g_i(\vec{x})$ where $\vec{u} = (u_1, u_2, \ldots, u_m)$ and $\vec{x} = (x_1, x_2, \ldots, x_n)$. \\
+    Then
+    \begin{equation}
+        \begin{aligned}
+            \frac{\partial y}{\partial x_i} = \frac{\partial y}{\partial u_1}\frac{\partial u_1}{\partial x_i} + \ldots + \frac{\partial y}{\partial u_m}\frac{\partial u_m}{\partial x_i} 
+        \end{aligned}
+    \end{equation}
 
+    \subsubsection*{Baye's Theorem}
+    Given any events A and B, 
+    \begin{equation}
+        \begin{aligned}
+            P(A|B) = \frac{P(B|A)P(A)}{P(B)}
+        \end{aligned}
+    \end{equation}
 
+    \subsubsection*{Expectations}
 
 \subsection*{Linear Regression}
     We assume that the relationship between features $\vec{x}$ and target $y$ is approximately linear, i.e,
@@ -97,29 +113,32 @@ This paper is a learning documentaion which follows the book \href{https://d2l.a
     \end{equation}
     where $d$ is the \textit{feature dimensionality}, and $b$ is the \textit{bias}. As such,
     \begin{equation}
-        \hat{y} = \vec{w}^T\vec{x} + b
-                = X\vec{w} + b
+        \begin{aligned}
+        \hat{y} &= \vec{w}^T\vec{x} + b
+                &= X\vec{w} + b
+        \end{aligned}
     \end{equation}
     In essence, our goal is to find parameters $\vec{w}$ and $b$ such that our prediction error is 
     minimized for new data examples that are sampled from the same distribution X.
 
     \subsubsection*{Loss Function}
-    Naturally, our model requires an objective measure of how well it fits the training data.
-    Loss functions play this role by quantifying the distance between the \textit{observed} and \textit{predicted}
+    Naturally, our model requires an objective measure of how well or unwell it fits the training data.
+    Loss functions fill in this role by quantifying the distance between the \textit{observed} and \textit{predicted}
     labels. The most commonly used loss function is the squared error.
     \begin{equation}
         l^{(i)}(\vec{w},b) = \frac{1}{2}(\hat{y}^{(i)}-\vec{y}^{(i)})^2
     \end{equation}
-    Note that the constant coefficient $\frac{1}{2}$ is only notationally convenient as it disappears when we
-    take the derivative of the loss function. Furthermore, large differences between estimates $\hat{y}^{(i)}$ 
+    Note that the presence of the constant coefficient $\frac{1}{2}$ is notationally convenient as it disappears when we
+    take the derivative of the loss function. Also notice that large differences between estimates $\hat{y}^{(i)}$ 
     and targets $\vec{y}^{(i)}$ lead to larger contributions due to the function's quadratic form. In fact, while
     it does encourage our model to avoid sizeable errors, it also yields an excessive sensitivity to anomalous data.
-    Finally, to evaluate our model's performance over entire dataset of $n$ examples, we simply take the average of 
+    Finally, to evaluate our model's performance over entire the dataset of $n$ examples, we simply take the average of 
     the losses on the training set:
     \begin{equation}
         L^{(i)}(\vec{w},b) = \frac{1}{n}\sum_{i=1}^{n}\frac{1}{2}(\hat{y}^{(i)}-\vec{y}^{(i)})^2
     \end{equation}
-    Clearly, our goal is to find parameters $\vec{w}^*$ and $b^*$ to minimize the total loss across all examples.
+    Hopefully it should be clear by now that our goal is to find parameters $\vec{w}^*$ and $b^*$ such that 
+    the total loss is minimized across all examples.
 
     \subsubsection*{Minibatch Stochastic Gradient Descent}
     \begin{equation*}
@@ -185,23 +204,26 @@ This paper is a learning documentaion which follows the book \href{https://d2l.a
            R[p,f] = E_{(\vec{x},y)\sim P[l(\vec{x},y,f{\vec{x}})]} = \int\int l(\vec{x},y,f(\vec{x}))p(\vec{x},y)d\vec{x}dy
          \end{aligned}
     \end{equation*}
-    Note that we can never measure $R$ exactly since the density function $p(\vec{x},y)$ has a form that cannot
+    Note that we can never measure $R$ exactly since the density function $p(\vec{x},y)$ has a form that can almost never
     be precisely known. Moreover, since we cannot sample an infinite stream of data points, we must resort to estimating
     the generalization error by applying our model to an independent test set that is withheld from our training set.
     \subsubsection*{Model Complexity}
     Intuitively, when we have simple models mixed with abundant data, the training and generalization error tend to be close.
     Conversely, we can expect more a complex model and/or fewer examples to cause our training error to diminish, but the
-    generalization error to grow. Error on the holdout data, i.e. the validation set, is called the validation error.
+    generalization error to grow. Error on the holdout data, i.e. the validation set, is called the \textit{validation error}.
     
     \subsubsection*{Polynomial Curve Fitting}
     \subsubsection*{Cross Validation}
-
+    In cases when we are dealt with scarce training data, it is likely that we often lack enough hold out data to form a validation
+    set. A popular solution is to use \textit{K-fold cross-validation} where the training data is first partitioned into $k$ disjoints 
+    sets. Then, we perform a total of $k$ training/validation steps, each time training on $k-1$ sets and validating on the remaining unused set.
+    Finally, we average the training and validation errors over the results obtained from our $k$ experiments.
     \subsection*{Weight Decay}
     Recall that we can always mitigate overfitting by collecting more training data. However, gathering more data is often costly, time consuming,
     etc. Therefore, we introduce our first \textit{regularization} technique known as \textit{weight decay}.
     
     Note that we may also limit model complexity by tweaking the degree of our fitted polynomial. However, even small
-    changes in degree can dramatically increase model complexity, hence motivating the use of weight decay.
+    changes in degree can dramatically increase model complexity, hence motivating our necessity for a more fine-tuning method, i.e. weight decay.
 
     \subsubsection*{Norms \& Weight Decay}
     \begin{equation*}

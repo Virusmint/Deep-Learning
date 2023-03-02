@@ -1,6 +1,6 @@
 # Fdb version 3
-["pdflatex"] 1676000721 "c:/Users/Davay/Desktop/NovaScience/d2l/learn.tex" "learn.pdf" "learn" 1676000723
-  "c:/Users/Davay/Desktop/NovaScience/d2l/learn.tex" 1676000721 10269 fab973f552c4c0f9f2a6124f6e87f471 ""
+["pdflatex"] 1676087173 "c:/Users/Davay/Desktop/NovaScience/d2l/learn.tex" "learn.pdf" "learn" 1676087175
+  "c:/Users/Davay/Desktop/NovaScience/d2l/learn.tex" 1676087173 11767 8cca3bb2844f1af69366c59e57742262 ""
   "c:/texlive/2021/texmf-dist/fonts/map/fontname/texfonts.map" 1643162811 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm" 1643159748 1124 14ccf5552bc7f77ca02a8a402bea8bfb ""
   "c:/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy7.tfm" 1643159748 1120 7f9f170e8aa57527ad6c49feafd45d54 ""
@@ -237,9 +237,9 @@
   "c:/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1643168554 4417058 0b608c5d44817b826a1c6b0dd51c3a64 ""
   "c:/texlive/2021/texmf-var/web2c/pdftex/pdflatex.fmt" 1643168721 2796720 50c52ee680a3153c2a32f0e56b6ec8be ""
   "c:/texlive/2021/texmf.cnf" 1643168512 713 e69b156964470283e0530f5060668171 ""
-  "learn.aux" 1676000723 686 470fdebd29f279999e89f3533b8c7bc8 "pdflatex"
-  "learn.out" 1676000723 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "learn.tex" 1676000721 10269 fab973f552c4c0f9f2a6124f6e87f471 ""
+  "learn.aux" 1676087175 686 1021e496efe4cd3ab536fd12e6d22f30 "pdflatex"
+  "learn.out" 1676087175 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "learn.tex" 1676087173 11767 8cca3bb2844f1af69366c59e57742262 ""
   (generated)
   "learn.aux"
   "learn.log"
