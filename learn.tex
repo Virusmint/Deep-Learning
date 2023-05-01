@@ -21,9 +21,14 @@
 \usepackage{hyperref}  % Clickable links
 \renewcommand{\arraystretch}{1.6}
 
+% Theorems and definitions
 \theoremstyle{definition}
 \newtheorem*{definition}{Definition}
 \pgfplotsset{width=10cm,compat=1.9}
+
+% Graph drawings
+\usetikzlibrary{shapes,arrows,positioning} % Graph arrows
+\usetikzlibrary{automata,positioning,fit,shapes.geometric,backgrounds} % Node grouping
 
 % stats commands
 \newcommand{\E}{\mathbb{E}}
@@ -81,13 +86,16 @@
 \date{Febrary 9, 2023}
 \maketitle
 
-\subsection*{Preface}
-This paper is a learning documentation which follows the book \href{https://d2l.ai/}{Dive into Deep learning}.
-It must be noted that coding instructions are excluded.
-\subsection*{Preliminaries}
-    \subsubsection*{Linear Algebra}
+\section{Preface}
+This paper is a learning documentation adapted from the book \href{https://d2l.ai/}{Dive into Deep learning}.
+Coding implementations are omitted.
 
-    \subsubsection*{Chain Rule}
+\section{Preliminaries}
+    \subsection*{AutoDifferentiation}
+
+    \subsection*{Linear Algebra}
+
+    \subsection*{Chain Rule}
     Let $y = f(\vec{u})$ such that $\forall i, \vec{u}_i = g_i(\vec{x})$ where $\vec{u} = (u_1, u_2, \ldots, u_m)$ and $\vec{x} = (x_1, x_2, \ldots, x_n)$. \\
     Then
     \begin{equation}
@@ -96,17 +104,17 @@ It must be noted that coding instructions are excluded.
         \end{aligned}
     \end{equation}
 
-    \subsubsection*{Baye's Theorem}
-    Given any events A and B, 
+    \subsection*{Baye's Theorem}
+    Given any event A and B, 
     \begin{equation}
         \begin{aligned}
             P(A|B) = \frac{P(B|A)P(A)}{P(B)}
         \end{aligned}
     \end{equation}
 
-    \subsubsection*{Expectations}
+    \subsection*{Expectations}
 
-\subsection*{Linear Regression}
+\section{Linear Neural Networks for Regression}
     We assume that the relationship between features $\vec{x}$ and target $y$ is approximately linear, i.e,
     \begin{equation}
         E[Y|X=\vec{x}] = x_1w_1 + \ldots + x_dw_d + b \\
@@ -121,7 +129,7 @@ It must be noted that coding instructions are excluded.
     In essence, our goal is to find parameters $\vec{w}$ and $b$ such that our prediction error is 
     minimized for new data examples that are sampled from the same distribution X.
 
-    \subsubsection*{Loss Function}
+    \subsection*{Loss Function}
     Naturally, our model requires an objective measure of how well or unwell it fits the training data.
     Loss functions fill in this role by quantifying the distance between the \textit{observed} and \textit{predicted}
     labels. The most commonly used loss function is the squared error.
@@ -140,7 +148,7 @@ It must be noted that coding instructions are excluded.
     Hopefully it should be clear by now that our goal is to find parameters $\vec{w}^*$ and $b^*$ such that 
     the total loss is minimized across all examples.
 
-    \subsubsection*{Minibatch Stochastic Gradient Descent}
+    \subsection*{Minibatch Stochastic Gradient Descent}
     \begin{equation*}
         \begin{aligned}
         (\vec{w},b) &\leftarrow (\vec{w},b) - \frac{\eta}{|\beta|}\sum_{i\in\beta_i}\frac{\partial}{\partial(\vec{w},b)}l^{(i)}(\vec{w},b) \\
@@ -149,7 +157,7 @@ It must be noted that coding instructions are excluded.
         \end{aligned}
     \end{equation*}
 
-    \subsubsection*{Normal Distribution and Squared Loss}
+    \subsection*{Normal Distribution and Squared Loss}
     Recall
     \begin{equation*}
         \begin{aligned}
@@ -232,7 +240,7 @@ It must be noted that coding instructions are excluded.
         \end{aligned}
     \end{equation*}
 
-\section*{Linear Neural Networks for Classification}
+\section{Linear Neural Networks for Classification}
     \subsection*{Softmax Regression}
 
 
@@ -242,4 +250,105 @@ It must be noted that coding instructions are excluded.
         \end{aligned}
     \end{equation*}
     
+\section{Multilayer Perceptrons}
+Recall in section 3, we described affine transformations as linear transformations with added bias. This model maps inputs directly to
+outputs via a single affine transformation, followed by a softmax operation. However, linearity is often a strong assumption.
+    \subsection*{Limitations of Linear Models}
+    Linearity implies the weaker law of \textit{monotonicity} i.e. any increase in inputs must always correspond to an increase in our model's 
+    output (positive weights), or a decrease in our model's output (negative weights). Often times, linearity becomes too strong of an assumption
+    to be applied to problems that require more specific modelling. Suppose for example we want to predict whether an individual will repay loan
+    based on their salary. Though monotonic, this relationship is perhaps not linear as an increase in income from \$0 to \$50,000 likely
+    corresponds to a higher likelihood of repayment than an increase from \$1 million to \$1.05 million. As such, it may be preferable to
+    post-process our outcome by using a logarithmic map, to make linearity more plausible.
+    \subsection*{Incorporating Hidden Layers}
+    We overcome the limitations of linearity by incorporating one or more hidden layers. The most common way to do this is to stack many fully
+    connected layers on top of each other. We can think of the first $L-1$ layers as our representation and the final layer as our linear predictor.
+    This architecture is commonly called a \textit{multilayer preceptron} or \textit{MLP}.
+
+    \subsection*{From Linear to Nonlinear}
+    \begin{figure}[h]
+        \centering
+        \begin{tikzpicture}[->, >=stealth', auto, semithick, node distance=3cm]
+        \tikzstyle{every state}=[fill=white,draw=black,thick,text=black,scale=1]
+        \node[draw, circle]    (x1) at (0,0)        {$x_1$};
+        \node[draw, circle]    (x2) at (0,-1.5)     {$x_2$};
+        \node[draw, circle]    (x3) at (0,-3)       {$x_3$};
+        \node[draw, circle]    (x4) at (0,-4.5)     {$x_4$};
+        \node[draw, circle]    (h1) at (3,0)        {$h_1$};
+        \node[draw, circle]    (h2) at (3,-1.5)     {$h_2$};
+        \node[draw, circle]    (h3) at (3,-3)       {$h_3$};
+        \node[draw, circle]    (h4) at (3,-4.5)     {$h_4$};
+        \node[draw, circle]    (o1) at (6,0)        {$o_1$};
+        \node[draw, circle]    (o2) at (6,-1.5)     {$o_2$};
+        \node[draw, circle]    (o3) at (6,-3)       {$o_3$};
+        \node[draw, circle]    (o4) at (6,-4.5)     {$o_4$};
+        \begin{scope}[on background layer]
+        \end{scope}
+        \path
+        (x1) edge[]	node{}	        (h1)
+        (x1) edge[dotted]	node{}	(h2)
+        (x1) edge[dotted]	node{}	(h3)
+        (x1) edge[dotted]	node{}	(h4)
+        (x2) edge[dotted]	node{}	(h1)
+        (x2) edge[]	node{}	        (h2)
+        (x2) edge[dotted]	node{}	(h3)
+        (x2) edge[dotted]	node{}	(h4)
+        (x3) edge[dotted]	node{}	(h1)
+        (x3) edge[dotted]	node{}	(h2)
+        (x3) edge[]	node{}	        (h3)
+        (x3) edge[dotted]	node{}	(h4)
+        (x4) edge[dotted]	node{}	(h1)
+        (x4) edge[dotted]	node{}	(h2)
+        (x4) edge[dotted]	node{}	(h3)
+        (x4) edge[]	node{}	        (h4)
+        (h1) edge[]	node{}	        (o1)
+        (h1) edge[dotted]	node{}	(o2)
+        (h1) edge[dotted]	node{}	(o3)
+        (h1) edge[dotted]	node{}	(o4)
+        (h2) edge[dotted]	node{}	(o1)
+        (h2) edge[]	node{}	        (o2)
+        (h2) edge[dotted]	node{}	(o3)
+        (h2) edge[dotted]	node{}	(o4)
+        (h3) edge[dotted]	node{}	(o1)
+        (h3) edge[dotted]	node{}	(o2)
+        (h3) edge[]	node{}	        (o3)
+        (h3) edge[dotted]	node{}	(o4)
+        (h4) edge[dotted]	node{}	(o1)
+        (h4) edge[dotted]	node{}	(o2)
+        (h4) edge[dotted]	node{}	(o3)
+        (h4) edge[]	node{}	        (o4);
+        \end{tikzpicture}
+        \caption{An MLP with a hidden layer of 4 hidden units.}
+      \end{figure}
+    \subsection*{Activation Functions}
+    \subsubsection*{ReLU Function}
+    The most popular choice, due to both simplicity of implementation and its good performance on a variety of predictive tasks, is the rectified linear unit (ReLU) 
+    ReLU provides a very simple nonlinear transformation. Given an element $x$, the function is defined as the maximum of that element and 0:
+    \begin{equation*}
+        \begin{aligned}
+            ReLU(x) = \max(x,0)
+        \end{aligned}
+    \end{equation*}
+    When the input is negative, the derivative of the ReLU function is 0, and when the input is positive, the derivative of the ReLU function is 1. Note that the ReLU 
+    function is not differentiable when the input takes value precisely equal to 0. In these cases, we default to the left-hand-side derivative and say that the derivative
+    is 0 when the input is 0.
+    \subsubsection*{Sigmoid Function}
+    \begin{equation*}
+        \begin{aligned}
+            sigmoid(x) = \frac{1}{1+\exp(-x)}
+        \end{aligned}
+    \end{equation*}
+    \subsubsection*{Tanh Function}
+    \begin{equation*}
+        \begin{aligned}
+            tanh(x) = \frac{1-\exp(-2x)}{1+\exp(-2x)}
+        \end{aligned}
+    \end{equation*}
+
+    Variational autoencoders
+    Standard distribution
+    non-standard distribution gaussian
+    What is the difference between 
+    why do we initialize parameters with gaussian noise
+    How are activation fuctions used
 \end{document}
