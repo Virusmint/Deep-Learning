@@ -87,16 +87,60 @@
 \maketitle
 
 \section{Preface}
-This paper is a learning documentation adapted from the book \href{https://d2l.ai/}{Dive into Deep learning}.
-Coding implementations are omitted.
+This paper is a learning documentation adapted/copied from the book \href{https://d2l.ai/}{Dive into Deep learning}.
+Coding implementations are omitted (for now).
 
 \section{Preliminaries}
     \subsection*{AutoDifferentiation}
 
     \subsection*{Linear Algebra}
+    \subsubsection*{Norms}
+    Some of the most useful operators in linear algebra are norms. Informally, the norm of a vector tells us how big it is.
+    Here, we are employing a notion of size that concerns the magnitude of a vector’s components (not its dimensionality).
 
+    A norm is a function $||\cdot||$ that maps a vector to a scalar and satisfies the following three properties:
+    \begin{enumerate}
+        \item Given any vector $\mathbf{x}$, if we scale the vector by a scalar $\alpha \in \R$, its norm scales accordingly:
+        \begin{equation*}
+            \begin{aligned}
+                ||\alpha\mathbf{x}|| = |\alpha|||\mathbf{x}||
+            \end{aligned}
+        \end{equation*}
+        \item For any vectors $\mathbf{x}$ and $\mathbf{y}$, norms must satisfy the triangle inequality:
+        \begin{equation*}
+            \begin{aligned}
+                ||\mathbf{x} + \mathbf{y}|| = ||\mathbf{x}|| + ||\mathbf{y}||
+            \end{aligned}
+        \end{equation*}
+        \item The norm of a vector is nonnegative and vanishes if and only if the vector is zero: 
+        \begin{equation*}
+            \begin{aligned}
+                ||\mathbf{x}|| > 0 \iff \mathbf{x} \neq 0
+            \end{aligned}
+        \end{equation*}
+    \end{enumerate}
+    For instance, the $l2$ norm measures the (Euclidean) length of a vector which we've all seen already in school when calculating the hypotenuse of a right triangle..
+    Formally, we know it as
+    \begin{equation*}
+        \begin{aligned}
+            ||\mathbf{x}||_2 = \sqrt{\sum_{i=1}^{n}\mathbf{x}_i^2}
+        \end{aligned}
+    \end{equation*}
+    The $l1$ norm is also popular and the associated metric is called the Manhattan distance. By definition, the 
+    norm sums the absolute values of a vector's elements:
+    \begin{equation*}
+        \begin{aligned}
+            ||\mathbf{x}||_1 = \sum_{i=1}^{n}|\mathbf{x}_i|
+        \end{aligned}
+    \end{equation*}
+    Both the $l1$ and $l2$ norms are special cases of the more general norms:
+    \begin{equation}
+        \begin{aligned}
+            ||\mathbf{x}||_p = \left({\sum_{i=1}^{n}\mathbf{x}_i^p}\right)^{1/p}
+        \end{aligned}
+    \end{equation}
     \subsection*{Chain Rule}
-    Let $y = f(\vec{u})$ such that $\forall i, \vec{u}_i = g_i(\vec{x})$ where $\vec{u} = (u_1, u_2, \ldots, u_m)$ and $\vec{x} = (x_1, x_2, \ldots, x_n)$. \\
+    Let $y = f(\mathbf{u})$ such that $\forall i, \mathbf{u}_i = g_i(\mathbf{x})$ where $\mathbf{u} = (u_1, u_2, \ldots, u_m)$ and $\mathbf{x} = (x_1, x_2, \ldots, x_n)$. \\
     Then
     \begin{equation}
         \begin{aligned}
@@ -105,7 +149,7 @@ Coding implementations are omitted.
     \end{equation}
 
     \subsection*{Baye's Theorem}
-    Given any event A and B, 
+    Given any event A and B such that $P(B) \neq 0$, 
     \begin{equation}
         \begin{aligned}
             P(A|B) = \frac{P(B|A)P(A)}{P(B)}
@@ -115,79 +159,102 @@ Coding implementations are omitted.
     \subsection*{Expectations}
 
 \section{Linear Neural Networks for Regression}
-    We assume that the relationship between features $\vec{x}$ and target $y$ is approximately linear, i.e,
+    We assume that the relationship between features $\mathbf{x}$ and target $y$ is approximately linear, i.e,
     \begin{equation}
-        E[Y|X=\vec{x}] = x_1w_1 + \ldots + x_dw_d + b \\
+        E[Y|X=\mathbf{x}] = x_1w_1 + \ldots + x_dw_d + b \\
     \end{equation}
     where $d$ is the \textit{feature dimensionality}, and $b$ is the \textit{bias}. As such,
     \begin{equation}
         \begin{aligned}
-        \hat{y} &= \vec{w}^T\vec{x} + b
-                &= X\vec{w} + b
+        \hat{y} &= \mathbf{w}^T\mathbf{x} + b
+                &= \mathbf{Xw} + b
         \end{aligned}
     \end{equation}
-    In essence, our goal is to find parameters $\vec{w}$ and $b$ such that our prediction error is 
+    In essence, our goal is to find parameters $\mathbf{w}$ and $b$ such that our prediction error is 
     minimized for new data examples that are sampled from the same distribution X.
-
+    \begin{figure}[h]
+        \centering
+        \begin{tikzpicture}[->, >=stealth', auto, semithick, node distance=3cm]
+        \tikzstyle{every state}=[fill=white,draw=black,thick,text=black,scale=1]
+        \node[draw, circle]    (x1) at (0,0)        {$x_1$};
+        \node[draw, circle]    (x2) at (0,-1.5)     {$x_2$};
+        \node[draw, circle]    (x3) at (0,-3)       {$x_3$};
+        \node[draw, circle]    (xn) at (0,-5)       {$x_n$};
+        \node[draw, circle]    (y) at (6,-2.5)      {$\hat{y}$};
+        \begin{scope}[on background layer]
+        \end{scope}
+        \path
+        (x1) edge[]	node{$w_1$}	(y)
+        (x2) edge[]	node{$w_2$}	(y)
+        (x3) edge[]	node{$w_3$}	(y)
+        (x3) -- node[auto=false]{\vdots} (xn)
+        (xn) edge[]	node{$w_n$}	(y);
+        \end{tikzpicture}
+        \caption{Linear Regression Model with feature dimensionality $n$}
+    \end{figure}
     \subsection*{Loss Function}
     Naturally, our model requires an objective measure of how well or unwell it fits the training data.
     Loss functions fill in this role by quantifying the distance between the \textit{observed} and \textit{predicted}
     labels. The most commonly used loss function is the squared error.
     \begin{equation}
-        l^{(i)}(\vec{w},b) = \frac{1}{2}(\hat{y}^{(i)}-\vec{y}^{(i)})^2
+        l^{(i)}(\mathbf{w},b) = \frac{1}{2}(\hat{y}^{(i)}-\mathbf{y}^{(i)})^2
     \end{equation}
     Note that the presence of the constant coefficient $\frac{1}{2}$ is notationally convenient as it disappears when we
     take the derivative of the loss function. Also notice that large differences between estimates $\hat{y}^{(i)}$ 
-    and targets $\vec{y}^{(i)}$ lead to larger contributions due to the function's quadratic form. In fact, while
+    and targets $\mathbf{y}^{(i)}$ lead to larger contributions due to the function's quadratic form. In fact, while
     it does encourage our model to avoid sizeable errors, it also yields an excessive sensitivity to anomalous data.
     Finally, to evaluate our model's performance over entire the dataset of $n$ examples, we simply take the average of 
     the losses on the training set:
     \begin{equation}
-        L^{(i)}(\vec{w},b) = \frac{1}{n}\sum_{i=1}^{n}\frac{1}{2}(\hat{y}^{(i)}-\vec{y}^{(i)})^2
+        L^{(i)}(\mathbf{w},b) = \frac{1}{n}\sum_{i=1}^{n}\frac{1}{2}(\hat{y}^{(i)}-\mathbf{y}^{(i)})^2
     \end{equation}
-    Hopefully it should be clear by now that our goal is to find parameters $\vec{w}^*$ and $b^*$ such that 
+    Hence, our goal is to find parameters $\mathbf{w}^*$ and $b^*$ such that 
     the total loss is minimized across all examples.
 
     \subsection*{Minibatch Stochastic Gradient Descent}
     \begin{equation*}
         \begin{aligned}
-        (\vec{w},b) &\leftarrow (\vec{w},b) - \frac{\eta}{|\beta|}\sum_{i\in\beta_i}\frac{\partial}{\partial(\vec{w},b)}l^{(i)}(\vec{w},b) \\
-        \vec{w}     &\leftarrow \vec{w} - \frac{\eta}{|\beta|}\sum_{i\in\beta_i}\frac{\partial}{\partial\vec{w}}l^{(i)}(\vec{w},b) = \vec{w}- \frac{\eta}{|\beta|}\sum_{i\in\beta_i}\vec{x}^{(i)}(\vec{w}^T\vec{x}^{(i)} + b - \vec{y}^{(i)}) \\
-        b           &\leftarrow b - \frac{\eta}{|\beta|}\sum_{i\in\beta_i}\frac{\partial}{\partial b}l^{(i)}(\vec{w},b) = \vec{w}- \frac{\eta}{|\beta|}\sum_{i\in\beta_i}(\vec{w}^T\vec{x}^{(i)} + b - \vec{y}^{(i)})
+        (\mathbf{w},b) &\leftarrow (\mathbf{w},b) - \frac{\eta}{|\beta|}\sum_{i\in\beta_i}\frac{\partial}{\partial(\mathbf{w},b)}l^{(i)}(\mathbf{w},b) \\
+        \mathbf{w}     &\leftarrow \mathbf{w} - \frac{\eta}{|\beta|}\sum_{i\in\beta_i}\frac{\partial}{\partial\mathbf{w}}l^{(i)}(\mathbf{w},b) = \mathbf{w}- \frac{\eta}{|\beta|}\sum_{i\in\beta_i}\mathbf{x}^{(i)}(\mathbf{w}^T\mathbf{x}^{(i)} + b - \mathbf{y}^{(i)}) \\
+        b           &\leftarrow b - \frac{\eta}{|\beta|}\sum_{i\in\beta_i}\frac{\partial}{\partial b}l^{(i)}(\mathbf{w},b) = \mathbf{w}- \frac{\eta}{|\beta|}\sum_{i\in\beta_i}(\mathbf{w}^T\mathbf{x}^{(i)} + b - \mathbf{y}^{(i)})
         \end{aligned}
     \end{equation*}
 
     \subsection*{Normal Distribution and Squared Loss}
-    Recall
+    So far we have given a fairly functional motivation of the squared loss objective: the optimal parameters return the conditional expectation 
+    whenever the underlying pattern is truly linear, and the loss assigns outsize penalties for outliers. We can also provide a more formal motivation for the squared loss objective by making probabilistic assumptions about the distribution of noise.
+
+    To begin, recall that a normal distribution with mean $\mu$ and variance $\sigma^2$ (standard deviation $\sigma$) is given as
     \begin{equation*}
         \begin{aligned}
             p(x) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp({-\frac{1}{2\sigma^2}(x-\mu)^2})
         \end{aligned}
     \end{equation*}
-    Assume observations arise from noisy measurements
+    One way to motivate linear regression with squared loss is to assume that observations arise from noisy measurements, where the noise is normally distributed as follows:
     \begin{equation*}
         \begin{aligned}
-            y = \vec{w}^T\vec{x} + b + \epsilon
+            y = \mathbf{w}^T\mathbf{x} + b + \epsilon & & \textrm{where}\ \epsilon \sim \mathcal{N}(0,\,\sigma^{2})
         \end{aligned}
     \end{equation*}
-
+    Thus, we can now write out the likelihood of seeing a particular $y$ for a given $\mathbf{x}$ via
     \begin{equation*}
         \begin{aligned}
-            p(x) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp({-\frac{1}{2\sigma^2}(y - \vec{w}^T\vec{x} - b)^2})
+            P(y|\mathbf{x}) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp({-\frac{1}{2\sigma^2}(y - \mathbf{w}^T\mathbf{x} - b)^2})
         \end{aligned}
     \end{equation*}
-
+    As such, the likelihood factorizes. According to the \textit{principle of maximum likelihood}, the best values of parameters $\mathbf{w}$ and $b$ 
+    are those that maximize the likelihood of the entire dataset:
     \begin{equation*}
         \begin{aligned}
-            P(y|X) = \prod_{i=1}^{n}P(\vec{y}^{(i)}|\vec{x}^{(i)})
+            P(y|X) = \prod_{i=1}^{n}P(\mathbf{y}^{(i)}|\mathbf{x}^{(i)})
         \end{aligned}
     \end{equation*}
-    since all pairs $(\vec{y}^{(i)},\vec{x}^{(i)})$ were drawn independently. But, maximizing the product of exponential
+    since all pairs $(\mathbf{x}^{(i)},y^{(i)})$ were drawn independently of each other. But, maximizing the product of exponential
     functions is tedious. Instead, we minimize the negative log-likelihood:
     \begin{equation*}
         \begin{aligned}
-            -\log(y|X) &= -log(\prod_{i=1}^{n}P(\vec{y}^{(i)}|\vec{x}^{(i)})) \\
-                       &= \sum_{i=1}^{n} \frac{1}{2}\log(2\pi\sigma^2) + \frac{1}{2\sigma^2}(\vec{y}^{(i)}-\vec{w}^T\vec{x}^{(i)} - b)^2
+            -\log(y|X) &= -log(\prod_{i=1}^{n}P(\mathbf{y}^{(i)}|\mathbf{x}^{(i)})) \\
+                       &= \sum_{i=1}^{n} \frac{1}{2}\log(2\pi\sigma^2) + \frac{1}{2\sigma^2}(\mathbf{y}^{(i)}-\mathbf{w}^T\mathbf{x}^{(i)} - b)^2
         \end{aligned}
     \end{equation*}
     As such, it follows that minimizing the square error loss is equivalent to the maximum likelihood estimation of a linear model 
@@ -203,16 +270,16 @@ Coding implementations are omitted.
     Training error ($R_{emp}$) is a statistic calculated on the training dataset:
     \begin{equation*}
         \begin{aligned}
-           R_{emp}[X,\vec{y},f] = \frac{1}{n}\sum_{i=1}^{n}l(\vec{x}^{(i)},\vec{y}^{(i)},f(\vec{x})^{(i)})
+           R_{emp}[X,\mathbf{y},f] = \frac{1}{n}\sum_{i=1}^{n}l(\mathbf{x}^{(i)},\mathbf{y}^{(i)},f(\mathbf{x})^{(i)})
         \end{aligned}
     \end{equation*}
     Generalization error ($R$) is an expectation taken with respect to the underlying distribution:
     \begin{equation*}
         \begin{aligned}
-           R[p,f] = E_{(\vec{x},y)\sim P[l(\vec{x},y,f{\vec{x}})]} = \int\int l(\vec{x},y,f(\vec{x}))p(\vec{x},y)d\vec{x}dy
+           R[p,f] = E_{(\mathbf{x},y)\sim P[l(\mathbf{x},y,f{\mathbf{x}})]} = \int\int l(\mathbf{x},y,f(\mathbf{x}))p(\mathbf{x},y)d\mathbf{x}dy
          \end{aligned}
     \end{equation*}
-    Note that we can never measure $R$ exactly since the density function $p(\vec{x},y)$ has a form that can almost never
+    Note that we can never measure $R$ exactly since the density function $p(\mathbf{x},y)$ has a form that can almost never
     be precisely known. Moreover, since we cannot sample an infinite stream of data points, we must resort to estimating
     the generalization error by applying our model to an independent test set that is withheld from our training set.
     \subsubsection*{Model Complexity}
@@ -236,7 +303,7 @@ Coding implementations are omitted.
     \subsubsection*{Norms \& Weight Decay}
     \begin{equation*}
         \begin{aligned}
-            \vec{w}     &\leftarrow (1-\eta\lambda)\vec{w} - \frac{\eta}{|\beta|}\sum_{i\in\beta_i}\frac{\partial}{\partial\vec{w}}l^{(i)}(\vec{w},b) = \vec{w}- \frac{\eta}{|\beta|}\sum_{i\in\beta_i}\vec{x}^{(i)}(\vec{w}^T\vec{x}^{(i)} + b - \vec{y}^{(i)}) \\
+            \mathbf{w}     &\leftarrow (1-\eta\lambda)\mathbf{w} - \frac{\eta}{|\beta|}\sum_{i\in\beta_i}\frac{\partial}{\partial\mathbf{w}}l^{(i)}(\mathbf{w},b) = \mathbf{w}- \frac{\eta}{|\beta|}\sum_{i\in\beta_i}\mathbf{x}^{(i)}(\mathbf{w}^T\mathbf{x}^{(i)} + b - \mathbf{y}^{(i)}) \\
         \end{aligned}
     \end{equation*}
 
@@ -257,9 +324,9 @@ outputs via a single affine transformation, followed by a softmax operation. How
     Linearity implies the weaker law of \textit{monotonicity} i.e. any increase in inputs must always correspond to an increase in our model's 
     output (positive weights), or a decrease in our model's output (negative weights). Often times, linearity becomes too strong of an assumption
     to be applied to problems that require more specific modelling. Suppose for example we want to predict whether an individual will repay loan
-    based on their salary. Though monotonic, this relationship is perhaps not linear as an increase in income from \$0 to \$50,000 likely
+    based on their salary. Although this relationship is monotonic, it is perhaps not linear as an increase in income from \$0 to \$50,000 likely
     corresponds to a higher likelihood of repayment than an increase from \$1 million to \$1.05 million. As such, it may be preferable to
-    post-process our outcome by using a logarithmic map, to make linearity more plausible.
+    post-process our outcome by using a logarithmic map, to make linearity a more plausible assumption.
     \subsection*{Incorporating Hidden Layers}
     We overcome the limitations of linearity by incorporating one or more hidden layers. The most common way to do this is to stack many fully
     connected layers on top of each other. We can think of the first $L-1$ layers as our representation and the final layer as our linear predictor.
