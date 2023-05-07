@@ -308,12 +308,34 @@ Coding implementations are omitted (for now).
     \end{equation*}
 
 \section{Linear Neural Networks for Classification}
-    \subsection*{Softmax Regression}
+    \subsection*{Classification}
 
-
+    \subsection*{Linear Model}
     \begin{equation*}
         \begin{aligned}
-             = \hat{y}_i = \frac{\exp(o_i)}{\sum_{j}\exp(o_j)}
+        o_1 &= x_1 w_{11} + x_2 w_{12} + x_3 w_{13} + x_4 w_{14} + b_1,\\
+        o_2 &= x_1 w_{21} + x_2 w_{22} + x_3 w_{23} + x_4 w_{24} + b_2,\\
+        o_3 &= x_1 w_{31} + x_2 w_{32} + x_3 w_{33} + x_4 w_{34} + b_3.
+        \end{aligned}
+    \end{equation*}
+
+
+    Assuming a suitable loss function, we could try, directly, to minimize the difference between 
+ and the labels 
+. While it turns out that treating classification as a vector-valued regression problem works surprisingly well, it is nonetheless lacking in the following ways:
+
+There is no guarantee that the outputs 
+ sum up to 
+ in the way we expect probabilities to behave.
+
+There is no guarantee that the outputs 
+ are even nonnegative, even if their outputs sum up to 1
+, or that they do not exceed 1
+.
+    \subsection*{Softmax}
+    \begin{equation*}
+        \begin{aligned}
+            \textrm{softmax}(y) \textrm{where} \hat{y}_i = \frac{\exp(o_i)}{\sum_{j}\exp(o_j)}
         \end{aligned}
     \end{equation*}
     
@@ -411,7 +433,49 @@ outputs via a single affine transformation, followed by a softmax operation. How
             tanh(x) = \frac{1-\exp(-2x)}{1+\exp(-2x)}
         \end{aligned}
     \end{equation*}
+    
+    \subsection*{Forward and Backward Propagation, Computational Graphs}
+    \subsubsection*{Forward Propagation}
 
+    \subsubsection*{Backward Propagation}
+
+
+
+    \subsection*{Numerical Stability and Initialization}
+    \subsubsection*{Vanishing and Exploding Gradients}
+    
+    \subsubsection*{Parameter Initialization}
+    One way of addressing—or at least mitigating—the issues raised above is through careful initialization. As we will see later, additional care during optimization and 
+    suitable regularization can further enhance stability.
+
+    \subsubsection*{Default Initialization}
+    In the previous sections, we used a normal distribution to initialize the values of our weights. If we do not specify the initialization method, the framework will 
+    use a default random initialization method, which often works well in practice for moderate problem sizes.
+
+    \subsection*{Generalization in Deep Learning}
+    The TL;DR of the present moment is that the theory of deep learning has produced promising lines of attack and scattered fascinating results, but still appears far 
+    from a comprehensive account of both (i) why we are able to optimize neural networks and (ii) how models learned by gradient descent manage to generalize so well, 
+    even on high-dimensional tasks. However, in practice, (i) is seldom a problem (we can always find parameters that will fit all of our training data) and thus understanding 
+    generalization is far the bigger problem. On the other hand, even absent the comfort of a coherent scientific theory, practitioners have developed a large collection 
+    of techniques that may help you to produce models that generalize well in practice. While no pithy summary can possibly do justice to the vast topic of generalization 
+    in deep learning, and while the overall state of research is far from resolved, we hope, in this section, to present a broad overview of the state of research and practice.
+    
+    \subsection*{Dropout}
+    
+    \section{Builder's Guide}
+
+    \section{Convolutional Neural Networks}
+    Image data is represented as a two-dimensional grid of pixels, be it monochromatic or in color. Accordingly each pixel corresponds to one or multiple numerical values
+    respectively. So far we ignored this rich structure and treated them as vectors of numbers by flattening the images, irrespective of the spatial relation between pixels.
+    This deeply unsatisfying approach was necessary in order to feed the resulting one-dimensional vectors through a fully connected MLP.
+
+    Because these networks are invariant to the order of the features, we could get similar results regardless of whether we preserve an order corresponding to the spatial 
+    structure of the pixels or if we permute the columns of our design matrix before fitting the MLP’s parameters. Preferably, we would leverage our prior knowledge that 
+    nearby pixels are typically related to each other, to build efficient models for learning from image data.
+    \subsection*{From Fully Connected Layers to Convolutions}
+
+    \newpage
+    \subsection*{Miscellaneous}
     Variational autoencoders
     Standard distribution
     non-standard distribution gaussian
