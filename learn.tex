@@ -276,7 +276,7 @@ Coding implementations are omitted (for now).
     Generalization error ($R$) is an expectation taken with respect to the underlying distribution:
     \begin{equation*}
         \begin{aligned}
-           R[p,f] = E_{(\mathbf{x},y)\sim P[l(\mathbf{x},y,f{\mathbf{x}})]} = \int\int l(\mathbf{x},y,f(\mathbf{x}))p(\mathbf{x},y)d\mathbf{x}dy
+           R[p,f] = E_{(\mathbf{x},y)\sim P[l(\mathbf{x},y,f(\mathbf{x})]} = \int\int l(\mathbf{x},y,f(\mathbf{x}))p(\mathbf{x},y)d\mathbf{x}dy
          \end{aligned}
     \end{equation*}
     Note that we can never measure $R$ exactly since the density function $p(\mathbf{x},y)$ has a form that can almost never
@@ -323,22 +323,22 @@ Coding implementations are omitted (for now).
     Assuming a suitable loss function, we could try, directly, to minimize the difference between 
  and the labels 
 . While it turns out that treating classification as a vector-valued regression problem works surprisingly well, it is nonetheless lacking in the following ways:
-
-There is no guarantee that the outputs 
- sum up to 
- in the way we expect probabilities to behave.
-
-There is no guarantee that the outputs 
- are even nonnegative, even if their outputs sum up to 1
-, or that they do not exceed 1
-.
+\begin{enumerate}
+    \item There is no guarantee that the outputs $\sigma_i$ sum up to 1 in the way we expect probabilities to behave.
+    \item There is no guarantee that the outputs $\sigma_i$ are even nonnegative, even if their outputs sum up to 1, or that they do not exceed 1
+\end{enumerate}
     \subsection*{Softmax}
     \begin{equation*}
         \begin{aligned}
-            \textrm{softmax}(y) \textrm{where} \hat{y}_i = \frac{\exp(o_i)}{\sum_{j}\exp(o_j)}
+            \hat{\mathbf{y}} = \mathrm{softmax}(\mathbf{o}) \quad \text{where}\quad \hat{y}_i = \frac{\exp(o_i)}{\sum_j \exp(o_j)}.
         \end{aligned}
     \end{equation*}
-    
+
+    \begin{equation*}
+        \begin{aligned}
+            P(\mathbf{Y} \mid \mathbf{X}) = \prod_{i=1}^n P(\mathbf{y}^{(i)} \mid \mathbf{x}^{(i)}).
+        \end{aligned}
+    \end{equation*}
 \section{Multilayer Perceptrons}
 Recall in section 3, we described affine transformations as linear transformations with added bias. This model maps inputs directly to
 outputs via a single affine transformation, followed by a softmax operation. However, linearity is often a strong assumption.

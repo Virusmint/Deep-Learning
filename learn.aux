@@ -2,10 +2,13 @@
 \providecommand\hyper@newdestlabel[2]{}
 \providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
 \HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldcontentsline\contentsline
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
 \global\let\oldnewlabel\newlabel
 \gdef\newlabel#1#2{\newlabelxx{#1}#2}
 \gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
 \AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\contentsline\oldcontentsline
 \let\newlabel\oldnewlabel
 \fi}
 \fi}
@@ -19,7 +22,7 @@
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Linear Regression Model with feature dimensionality $n$}}{3}{figure.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {4}Linear Neural Networks for Classification}{5}{section.4}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {5}Multilayer Perceptrons}{6}{section.5}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces An MLP with a hidden layer of 4 hidden units.}}{6}{figure.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces An MLP with a hidden layer of 4 hidden units.}}{7}{figure.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {6}Builder's Guide}{8}{section.6}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {7}Convolutional Neural Networks}{8}{section.7}\protected@file@percent }
 \gdef \@abspage@last{9}
