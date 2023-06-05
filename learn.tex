@@ -308,8 +308,16 @@ Coding implementations are omitted (for now).
     \end{equation*}
 
 \section{Linear Neural Networks for Classification}
+    
     \subsection*{Classification}
-
+    To get our feet wet, let’s start with a simple image classification problem. Here, each input consists of a $2\times2$
+    grayscale image. We can represent each pixel value with a single scalar, giving us four features $x_1, x_2, x_3, x_4$. 
+    Further, let’s assume that each image belongs to one among the categories “cat”, “chicken”, and “dog”. 
+    \newline
+    In general, classification problems do not come with natural orderings among the classes. Fortunately, statisticians long ago invented a 
+    simple way to represent categorical data: the \emph{one-hot encoding}. A one-hot encoding is a vector with as many components as we have 
+    categories. The component corresponding to a particular instance’s category is set to 1 and all other components are set to 0. In our case, 
+    a label would be a three-dimensional vector, with $(1,0,0)$ corresponding to “cat”, $(0,1,0)$ to “chicken”, and $(0,0,1)$ to “dog”.
     \subsection*{Linear Model}
     \begin{equation*}
         \begin{aligned}
@@ -323,20 +331,41 @@ Coding implementations are omitted (for now).
     Assuming a suitable loss function, we could try, directly, to minimize the difference between 
  and the labels 
 . While it turns out that treating classification as a vector-valued regression problem works surprisingly well, it is nonetheless lacking in the following ways:
-\begin{enumerate}
+\begin{itemize}
     \item There is no guarantee that the outputs $\sigma_i$ sum up to 1 in the way we expect probabilities to behave.
     \item There is no guarantee that the outputs $\sigma_i$ are even nonnegative, even if their outputs sum up to 1, or that they do not exceed 1
-\end{enumerate}
+\end{itemize}
     \subsection*{Softmax}
     \begin{equation*}
         \begin{aligned}
-            \hat{\mathbf{y}} = \mathrm{softmax}(\mathbf{o}) \quad \text{where}\quad \hat{y}_i = \frac{\exp(o_i)}{\sum_j \exp(o_j)}.
+            \hat{\mathbf{y}} = \mathrm{softmax}(\mathbf{o}) \quad \text{where} \quad \hat{y}_i = \frac{\exp(o_i)}{\sum_j \exp(o_j)}.
+        \end{aligned}
+    \end{equation*}
+
+    \subsection*{Log-Likelihood}
+    \begin{equation*}
+        \begin{aligned}
+            P(\mathbf{Y} \mid \mathbf{X}) = \prod_{i=1}^n P(\mathbf{y}^{(i)} \mid \mathbf{x}^{(i)}).
+        \end{aligned}
+    \end{equation*}
+    \begin{equation*}
+        \begin{aligned}
+            l(\mathbf{y},\mathbf{\hat{y}}) = -\sum_{j=1}^{q}y_j \log \hat{y_j}
+        \end{aligned}
+    \end{equation*}
+
+    \subsection*{Softmax and Cross-Entropy Loss}
+    \begin{equation*}
+        \begin{aligned}
+            l(\mathbf{y}, \hat{\mathbf{y}}) &=  - \sum_{j=1}^q y_j \log \frac{\exp(o_j)}{\sum_{k=1}^q \exp(o_k)} \\
+            &= \sum_{j=1}^q y_j \log \sum_{k=1}^q \exp(o_k) - \sum_{j=1}^q y_j o_j \\
+            &= \log \sum_{k=1}^q \exp(o_k) - \sum_{j=1}^q y_j o_j.
         \end{aligned}
     \end{equation*}
 
     \begin{equation*}
         \begin{aligned}
-            P(\mathbf{Y} \mid \mathbf{X}) = \prod_{i=1}^n P(\mathbf{y}^{(i)} \mid \mathbf{x}^{(i)}).
+            \partial_{o_j} l(\mathbf{y}, \hat{\mathbf{y}}) = \frac{\exp(o_j)}{\sum_{k=1}^q \exp(o_k)} - y_j = \mathrm{softmax}(\mathbf{o})_j - y_j.
         \end{aligned}
     \end{equation*}
 \section{Multilayer Perceptrons}
@@ -435,9 +464,10 @@ outputs via a single affine transformation, followed by a softmax operation. How
     \end{equation*}
     
     \subsection*{Forward and Backward Propagation, Computational Graphs}
-    \subsubsection*{Forward Propagation}
-
-    \subsubsection*{Backward Propagation}
+        \subsubsection*{Forward Propagation}
+            Forward propagation (or forward pass) refers to the calculation and storage of intermediate variables (including outputs) for a neural network in order from 
+            the input layer to the output layer. 
+        \subsubsection*{Backward Propagation}
 
 
 
@@ -473,6 +503,31 @@ outputs via a single affine transformation, followed by a softmax operation. How
     structure of the pixels or if we permute the columns of our design matrix before fitting the MLP’s parameters. Preferably, we would leverage our prior knowledge that 
     nearby pixels are typically related to each other, to build efficient models for learning from image data.
     \subsection*{From Fully Connected Layers to Convolutions}
+
+    \section{Modern Convolutional Neural Networks}
+
+    \section{Recurrent Neural Networks}
+
+    \section{Modern Recurrent Neural Networks}
+
+    \section{Attention Mechanisms and Transformers}
+    Denote by $\mathcal{D} \stackrel{\mathrm{def}}{=} \{(\mathbf{k}_1, \mathbf{v}_1), \ldots (\mathbf{k}_m, \mathbf{v}_m)\}$ a database of $m$ tuples of \emph{keys} and \emph{values}. 
+    Moreover, denote by $\mathbf{q}$ a \emph{query}. Then we can define the \emph{attention} over $\mathcal{D}$
+    \begin{equation*}
+        \begin{aligned}
+            \mathrm{Attention}(\mathbf{q}, \mathcal{D}) \stackrel{\mathrm{def}}{=} \sum_{i=1}^m \alpha(\mathbf{q}, \mathbf{k}_i) \mathbf{v}_i,
+        \end{aligned}
+    \end{equation*}
+    where $\alpha(\mathbf{q}, \mathbf{k}_i) \in \mathbb{R}$ are scalar attention weights. The operation itself is typically referred to as \emph{attention pooling}.  
+    The name attention derives from the fact that the operation pays particular attention to the terms for which the weight $\alpha$ is significant (i.e., large). 
+    As such, the attention over $\mathcal{D}$ generates a linear combination of values contained in the database. This opens a number of special cases, namely
+    \begin{itemize}
+        \item The weights $\alpha(\mathbf{q}, \mathbf{k}_i)$ are nonnegative. In this case the output of the attention mechanism is contained in the convex cone spanned by the values $\mathbf{v}_i$.
+        \item The weights $\alpha(\mathbf{q}, \mathbf{k}_i)$ form a convex combination, i.e., $\sum_i \alpha(\mathbf{q}, \mathbf{k}_i) = 1$ and $\alpha(\mathbf{q}, \mathbf{k}_i) \geq 0$ for all $i$. 
+        This is the most common setting in deep learning.
+        \item Exactly one of the weights $\alpha(\mathbf{q}, \mathbf{k}_i)$ is $1$, while all others are $0$. This is akin to a traditional database query.
+        \item All weights are equal, i.e., $\alpha(\mathbf{q}, \mathbf{k}_i) = \frac{1}{m}$ for all $i$. This amounts to averaging across the entire database, also called average pooling in deep learning.
+    \end{itemize}
 
     \newpage
     \subsection*{Miscellaneous}
