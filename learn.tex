@@ -504,6 +504,60 @@ outputs via a single affine transformation, followed by a softmax operation. How
     nearby pixels are typically related to each other, to build efficient models for learning from image data.
     \subsection*{From Fully Connected Layers to Convolutions}
 
+    \begin{equation*}
+        \begin{aligned} 
+            [\mathbf{H}]_{i, j} &= [\mathbf{U}]_{i, j} + \sum_k \sum_l[\mathsf{W}]_{i, j, k, l}  [\mathbf{X}]_{k, l}\\ &=  [\mathbf{U}]_{i, j} +
+            \sum_a \sum_b [\mathsf{V}]_{i, j, a, b}  [\mathbf{X}]_{i+a, j+b}.
+        \end{aligned}
+    \end{equation*}
+
+    \subsubsection*{Translation Invariance}
+    \begin{equation*}
+        \begin{aligned}
+            [\mathbf{H}]_{i, j} = u + \sum_a\sum_b [\mathbf{V}]_{a, b}  [\mathbf{X}]_{i+a, j+b}.
+        \end{aligned}
+    \end{equation*}
+
+    \subsubsection*{Spatial Locality}
+    \begin{equation*}
+        \begin{aligned}
+            [\mathbf{H}]_{i, j} = u + \sum_{a = -\Delta}^{\Delta} \sum_{b = -\Delta}^{\Delta} [\mathbf{V}]_{a, b}  [\mathbf{X}]_{i+a, j+b}.
+        \end{aligned}
+    \end{equation*}
+
+    \subsection*{Convolutions}
+    \begin{equation*}
+        \begin{aligned}
+            (f * g)(\mathbf{x}) = \int f(\mathbf{z}) g(\mathbf{x}-\mathbf{z}) d\mathbf{z}.
+        \end{aligned}
+    \end{equation*}
+
+    \begin{equation*}
+        \begin{aligned}
+            (f * g)(i) = \sum_a f(a) g(i-a).
+        \end{aligned}
+    \end{equation*}
+
+    \begin{equation*}
+        \begin{aligned}
+            (f * g)(i, j) = \sum_a\sum_b f(a, b) g(i-a, j-b).
+        \end{aligned}
+    \end{equation*}
+
+    \subsection*{Channels}
+
+
+    \subsection*{Padding}
+
+
+    \subsection*{Stride}
+
+    \subsection*{Pooling}
+        \subsubsection*{Maximum Pooling}
+
+        \subsubsection*{Average Pooling}
+
+
     \section{Modern Convolutional Neural Networks}
 
     \section{Recurrent Neural Networks}
@@ -511,6 +565,7 @@ outputs via a single affine transformation, followed by a softmax operation. How
     \section{Modern Recurrent Neural Networks}
 
     \section{Attention Mechanisms and Transformers}
+    \subsubsection*{Queries, Keys, and Values}
     Denote by $\mathcal{D} \stackrel{\mathrm{def}}{=} \{(\mathbf{k}_1, \mathbf{v}_1), \ldots (\mathbf{k}_m, \mathbf{v}_m)\}$ a database of $m$ tuples of \emph{keys} and \emph{values}. 
     Moreover, denote by $\mathbf{q}$ a \emph{query}. Then we can define the \emph{attention} over $\mathcal{D}$
     \begin{equation*}
@@ -528,6 +583,49 @@ outputs via a single affine transformation, followed by a softmax operation. How
         \item Exactly one of the weights $\alpha(\mathbf{q}, \mathbf{k}_i)$ is $1$, while all others are $0$. This is akin to a traditional database query.
         \item All weights are equal, i.e., $\alpha(\mathbf{q}, \mathbf{k}_i) = \frac{1}{m}$ for all $i$. This amounts to averaging across the entire database, also called average pooling in deep learning.
     \end{itemize}
+    \begin{equation*}
+        \begin{aligned}
+            \alpha(\mathbf{q}, \mathbf{k}_i) = \frac{\exp(a(\mathbf{q}, \mathbf{k}_i))}{\sum_j \exp(a(\mathbf{q}, \mathbf{k}_j))}.
+        \end{aligned}
+    \end{equation*}
+    \section{Optimization Algorithms}
+    
+    \subsection*{Convexity}
+    Before convex analysis, we need to define \emph{convex} sets and \emph{convex} functions. They lead to mathematical tools that are commonly applied to machine learning.
+
+    \subsubsection*{Convex Sets}
+    \begin{equation*}
+        \begin{aligned}
+            \lambda  a + (1-\lambda)  b \in \mathcal{X} \text{ whenever } a, b \in \mathcal{X}.
+        \end{aligned}
+    \end{equation*}
+
+    \subsubsection*{Convex Functions}
+
+    Now that we have convex sets we can introduce \emph{convex} functions $f$ . Given a \emph{convex} set $\mathcal{X}$, a function $f: \mathcal{X} \to \mathbb{R}$ is \emph{convex} if for all 
+    $x, x' \in \mathcal{X}$ and for all $\lambda \in [0, 1]$ we have
+    \begin{equation*}
+        \begin{aligned}
+            \lambda f(x) + (1-\lambda) f(x') \geq f(\lambda x + (1-\lambda) x').
+        \end{aligned}
+    \end{equation*}
+
+    \subsubsection*{Jensen's Inequality}
+    Given a convex function $f$, one of the most useful mathematical tools is \emph{Jensen's inequality}. It amounts to a generalization of the definition of convexity:
+    \begin{equation*}
+        \begin{aligned}
+           \sum_i \alpha_i f(x_i)  \geq f\left(\sum_i \alpha_i x_i\right)    \text{ and }    E_X[f(X)]  \geq f\left(E_X[X]\right),
+        \end{aligned}
+    \end{equation*}
+
+
+
+
+
+
+
+
+
 
     \newpage
     \subsection*{Miscellaneous}

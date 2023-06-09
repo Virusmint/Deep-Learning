@@ -1,6 +1,6 @@
 # Fdb version 3
-["pdflatex"] 1685984814 "c:/Users/Davay/Desktop/D2L/learn.tex" "learn.pdf" "learn" 1685984816
-  "c:/Users/Davay/Desktop/D2L/learn.tex" 1685984813 30447 3e925bd6cee7dfb32ee106bf9a9c6adb ""
+["pdflatex"] 1686265691 "c:/Users/Davay/Desktop/D2L/learn.tex" "learn.pdf" "learn" 1686265693
+  "c:/Users/Davay/Desktop/D2L/learn.tex" 1686265689 33683 7136873d4896da3e6380d2edd304c5fa ""
   "c:/texlive/2021/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1643164761 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2021/texmf-dist/fonts/map/fontname/texfonts.map" 1643166411 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2021/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm" 1643165725 1536 74b7293ec3713bb7fdca8dd1bd1f469c ""
@@ -31,6 +31,8 @@
   "c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmr17.tfm" 1643164712 1292 296a67155bdbfc32aa9c636f21e91433 ""
   "c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmr6.tfm" 1643164712 1300 b62933e007d01cfd073f79b963c01526 ""
   "c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmr8.tfm" 1643164712 1292 21c1c5bfeaebccffdb478fd231a0997d ""
+  "c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmss12.tfm" 1643164712 1324 37b971caf729d7edd9cbb9f9b0ea76eb ""
+  "c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmss8.tfm" 1643164712 1296 d77f431d10d47c8ea2cc18cf45346274 ""
   "c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm" 1643164712 1124 6c73e740cf17375f03eec0ee63599741 ""
   "c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmsy6.tfm" 1643164712 1116 933a60c408fc0a863a92debe84b2d294 ""
   "c:/texlive/2021/texmf-dist/fonts/tfm/public/cm/cmsy8.tfm" 1643164712 1120 8b7d695260f3cff42e636090a8002094 ""
@@ -44,6 +46,7 @@
   "c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb" 1643163348 32722 d7379af29a190c3f453aba36302ff5a9 ""
   "c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb" 1643163348 32362 bc3f3eec7ab7d65fe700963d4017d32c ""
   "c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1643163348 32726 39f0f9e62e84beb801509898a605dbd5 ""
+  "c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb" 1643163348 24393 3b7eb51a67a0a62aec5849271bdb9c2e ""
   "c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1643163348 32569 5e5ddc8df908dea60932f3c484a54c0d ""
   "c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1643163348 32626 5abc8bb2f28aa647d4c70f8ea38cc0d3 ""
   "c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb" 1643163348 36118 fad905eba93cff5bce1e185fe980a177 ""
@@ -261,9 +264,9 @@
   "c:/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1643172154 4417058 0b608c5d44817b826a1c6b0dd51c3a64 ""
   "c:/texlive/2021/texmf-var/web2c/pdftex/pdflatex.fmt" 1643172321 2796720 50c52ee680a3153c2a32f0e56b6ec8be ""
   "c:/texlive/2021/texmf.cnf" 1643172112 713 e69b156964470283e0530f5060668171 ""
-  "learn.aux" 1685984816 2374 091beb4b92f35552771c9243ffb4bc0f "pdflatex"
-  "learn.out" 1685984816 2016 649d775b4ac0140f01a5220d2fb7efec "pdflatex"
-  "learn.tex" 1685984813 30447 3e925bd6cee7dfb32ee106bf9a9c6adb ""
+  "learn.aux" 1686265693 2501 773636860b79dfb0b63fc0da05b01f5e "pdflatex"
+  "learn.out" 1686265693 2179 32677470e3bc053612c05c036be82778 "pdflatex"
+  "learn.tex" 1686265689 33683 7136873d4896da3e6380d2edd304c5fa ""
   (generated)
   "learn.aux"
   "learn.log"
