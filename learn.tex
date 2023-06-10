@@ -504,6 +504,11 @@ outputs via a single affine transformation, followed by a softmax operation. How
     nearby pixels are typically related to each other, to build efficient models for learning from image data.
     \subsection*{From Fully Connected Layers to Convolutions}
 
+    To start off, we can consider an MLP with two-dimensional images $\mathbf{X}$ as inputs and their immediate hidden representations $\mathbf{H}$  similarly represented 
+    as matrices (they are two-dimensional tensors in code), where both $\mathbf{X}$ and $\mathbf{H}$ have the same shape. Let that sink in. We now conceive of not only the 
+    inputs but also the hidden representations as possessing spatial structure.
+
+
     \begin{equation*}
         \begin{aligned} 
             [\mathbf{H}]_{i, j} &= [\mathbf{U}]_{i, j} + \sum_k \sum_l[\mathsf{W}]_{i, j, k, l}  [\mathbf{X}]_{k, l}\\ &=  [\mathbf{U}]_{i, j} +
@@ -519,13 +524,20 @@ outputs via a single affine transformation, followed by a softmax operation. How
     \end{equation*}
 
     \subsubsection*{Spatial Locality}
-    \begin{equation*}
+    We believe that we should not have to look very far away from location $(i, j)$ in order to glean relevant information to assess what is going on at $[\mathbf{H}]_{i, j}$. 
+    This means that outside some range $|a|> \Delta$ or $|b| > \Delta$, we should set $[\mathbf{V}]_{a, b} = 0$. Equivalently, we can rewrite $[\mathbf{H}]_{i, j}$ as
+    \begin{equation}
         \begin{aligned}
             [\mathbf{H}]_{i, j} = u + \sum_{a = -\Delta}^{\Delta} \sum_{b = -\Delta}^{\Delta} [\mathbf{V}]_{a, b}  [\mathbf{X}]_{i+a, j+b}.
         \end{aligned}
-    \end{equation*}
+    \end{equation}
+    where $\Delta$ is typically smaller than 10. Note that (7.1.3), in a nutshell, is what is called a convolutional layer. Convolutional neural networks (CNNs) are a special 
+    family of neural networks that contain convolutional layers. In the deep learning research community, $\mathbf{V}$ is referred to as a \emph{convolution kernel}, a \emph{filter}, 
+    or simply the layer's \emph{weights} that are learnable parameters.
 
     \subsection*{Convolutions}
+    Let’s briefly review why (7.1.3) is called a convolution. In mathematics, the convolution between two functions (Rudin, 1973), say 
+    is defined as
     \begin{equation*}
         \begin{aligned}
             (f * g)(\mathbf{x}) = \int f(\mathbf{z}) g(\mathbf{x}-\mathbf{z}) d\mathbf{z}.
@@ -545,8 +557,11 @@ outputs via a single affine transformation, followed by a softmax operation. How
     \end{equation*}
 
     \subsection*{Channels}
-
-
+    \begin{equation*}
+        \begin{aligned}
+            [\mathsf{H}]_{i,j,d} = \sum_{a = -\Delta}^{\Delta} \sum_{b = -\Delta}^{\Delta} \sum_c [\mathsf{V}]_{a, b, c, d} [\mathsf{X}]_{i+a, j+b, c},
+        \end{aligned}
+    \end{equation*}
     \subsection*{Padding}
 
 
