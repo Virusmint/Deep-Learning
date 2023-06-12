@@ -562,8 +562,20 @@ outputs via a single affine transformation, followed by a softmax operation. How
             [\mathsf{H}]_{i,j,d} = \sum_{a = -\Delta}^{\Delta} \sum_{b = -\Delta}^{\Delta} \sum_c [\mathsf{V}]_{a, b, c, d} [\mathsf{X}]_{i+a, j+b, c},
         \end{aligned}
     \end{equation*}
-    \subsection*{Padding}
 
+    \subsection*{Cross-Correlation Operation}
+    \begin{equation*}
+        \begin{aligned}
+            (n_h-k_h+1) \times (n_w-k_w+1)
+        \end{aligned}
+    \end{equation*}
+
+    \subsection*{Padding}
+    \begin{equation*}
+        \begin{aligned}
+            (n_h-k_h+p_h+1)\times(n_w-k_w+p_w+1).
+        \end{aligned}
+    \end{equation*}
 
     \subsection*{Stride}
 
