@@ -203,13 +203,12 @@ Coding implementations are omitted (for now).
     take the derivative of the loss function. Also notice that large differences between estimates $\hat{y}^{(i)}$ 
     and targets $\mathbf{y}^{(i)}$ lead to larger contributions due to the function's quadratic form. In fact, while
     it does encourage our model to avoid sizeable errors, it also yields an excessive sensitivity to anomalous data.
-    Finally, to evaluate our model's performance over entire the dataset of $n$ examples, we simply take the average of 
+    To evaluate our model's performance over entire the dataset of $n$ examples, we simply take the average of 
     the losses on the training set:
     \begin{equation}
         L^{(i)}(\mathbf{w},b) = \frac{1}{n}\sum_{i=1}^{n}\frac{1}{2}(\hat{y}^{(i)}-\mathbf{y}^{(i)})^2
     \end{equation}
-    Hence, our goal is to find parameters $\mathbf{w}^*$ and $b^*$ such that 
-    the total loss is minimized across all examples.
+    Our goal is to find parameters $\mathbf{w}^*$ and $b^*$ that can minizmize the total loss across all examples.
 
     \subsection*{Minibatch Stochastic Gradient Descent}
     \begin{equation*}
@@ -250,14 +249,14 @@ Coding implementations are omitted (for now).
         \end{aligned}
     \end{equation*}
     since all pairs $(\mathbf{x}^{(i)},y^{(i)})$ were drawn independently of each other. But, maximizing the product of exponential
-    functions is tedious. Instead, we minimize the negative log-likelihood:
+    functions is awkward. Instead, we minimize the negative log-likelihood:
     \begin{equation*}
         \begin{aligned}
             -\log(y|X) &= -log(\prod_{i=1}^{n}P(\mathbf{y}^{(i)}|\mathbf{x}^{(i)})) \\
                        &= \sum_{i=1}^{n} \frac{1}{2}\log(2\pi\sigma^2) + \frac{1}{2\sigma^2}(\mathbf{y}^{(i)}-\mathbf{w}^T\mathbf{x}^{(i)} - b)^2
         \end{aligned}
     \end{equation*}
-    As such, it follows that minimizing the square error loss is equivalent to the maximum likelihood estimation of a linear model 
+    It follows that minimizing the square error loss is equivalent to the maximum likelihood estimation of a linear model 
     under additive Gaussian noise.
 
 \subsection*{Generalization}
