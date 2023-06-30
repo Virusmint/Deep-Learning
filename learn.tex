@@ -579,9 +579,10 @@ is defined as
 \subsection*{Stride}
 
 \subsection*{Pooling}
-\subsubsection*{Maximum Pooling}
-
-\subsubsection*{Average Pooling}
+Like convolutional layers, \emph{pooling} operators consist of a fixed-shape window that is slid over all regions in the input according to its stride, computing a single 
+output for each location traversed by the fixed-shape window (sometimes known as the \emph{pooling window}). However, unlike the cross-correlation computation of the inputs and kernels 
+in the convolutional layer, the pooling layer contains no parameters (there is no \emph{kernel}). Instead, pooling operators are deterministic, typically calculating either the maximum 
+or the average value of the elements in the pooling window. These operations are called \emph{maximum pooling} and \emph{average pooling}, respectively.
 
 
 \section{Modern Convolutional Neural Networks}
@@ -733,7 +734,29 @@ Then the batch matrix multiplication (BMM) computes the element-wise product
     \end{aligned}
 \end{equation*}
 
+\subsection*{Scaled Dot-Product Attention}
+In practice, we often think in minibatches for efficiency, such as computing attention for $n$ queries and $m$ key-value pairs, where queries and keys are of length $d$
+and values are of length $v$. The scaled dot-product attention of queries $\mathbf Q\in\mathbb R^{n\times d}$, keys $\mathbf K\in\mathbb R^{m\times d}$, 
+and values $\mathbf V\in\mathbb R^{m\times v}$ thus can be written as
+ \begin{equation*}
+    \begin{aligned}
+        \mathrm{softmax}\left(\frac{\mathbf Q \mathbf K^\top }{\sqrt{d}}\right) \mathbf V \in \mathbb{R}^{n\times v}.
+    \end{aligned}
+\end{equation*}
 \subsubsection*{Additive Attention}
+When queries $\mathbf{q}$ and keys $\mathbf{k}$ are vectors of different dimensionalities, we can either use a matrix to address the mismatch via $\mathbf{q}^\top \mathbf{M} \mathbf{k}$, 
+or we can use additive attention as the scoring function. Another benefit is that, as its name indicates, the attention is additive. This can lead to some minor computational savings. 
+Given a query $\mathbf{q} \in \mathbb{R}^q$ and a key $\mathbf{k} \in \mathbb{R}^k$, the additive attention scoring function is given by
+\begin{equation*}
+    \begin{aligned}
+        a(\mathbf q, \mathbf k) = \mathbf w_v^\top \text{tanh}(\mathbf W_q\mathbf q + \mathbf W_k \mathbf k) \in \mathbb{R},
+    \end{aligned}
+\end{equation*}
+where $\mathbf W_q\in\mathbb R^{h\times q}$, $\mathbf W_k\in\mathbb R^{h\times k}$, and $\mathbf w_v\in\mathbb R^{h}$ are the learnable parameters. 
+This term is then fed into a softmax to ensure both nonnegativity and normalization. An equivalent interpretation of is that the query and key are 
+concatenated and fed into an MLP with a single hidden layer using $\tanh$ as the activation function and disabling bias terms.
+
+\subsection*{The Bahdanau Attention Mechanism}
 
 
 \section{Optimization Algorithms}
@@ -792,6 +815,8 @@ log-likelihood of partially observed random variables. That is, we use
 \subsection*{Miscellaneous}
 
 
+\section{Appendix: Mathematics for Deep Learning}
+\subsection{Maximum Likelihood}
 
 
 \end{document}
