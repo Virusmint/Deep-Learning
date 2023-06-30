@@ -1,6 +1,6 @@
 # Fdb version 3
-["pdflatex"] 1688086919 "c:/Users/Davay/Desktop/D2L/learn.tex" "learn.pdf" "learn" 1688086921
-  "c:/Users/Davay/Desktop/D2L/learn.tex" 1688086918 42375 324f10b190498d39d73d78d78c5ef90a ""
+["pdflatex"] 1688097000 "c:/Users/Davay/Desktop/D2L/learn.tex" "learn.pdf" "learn" 1688097002
+  "c:/Users/Davay/Desktop/D2L/learn.tex" 1688096999 44478 a691bb322fd0931298e2eeb2baf3eecc ""
   "c:/texlive/2021/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1643164761 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2021/texmf-dist/fonts/map/fontname/texfonts.map" 1643166411 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2021/texmf-dist/fonts/tfm/jknappen/ec/tcrm1200.tfm" 1643165725 1536 74b7293ec3713bb7fdca8dd1bd1f469c ""
@@ -265,9 +265,9 @@
   "c:/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1643172154 4417058 0b608c5d44817b826a1c6b0dd51c3a64 ""
   "c:/texlive/2021/texmf-var/web2c/pdftex/pdflatex.fmt" 1643172321 2796720 50c52ee680a3153c2a32f0e56b6ec8be ""
   "c:/texlive/2021/texmf.cnf" 1643172112 713 e69b156964470283e0530f5060668171 ""
-  "learn.aux" 1688086920 2501 aaab57df6fc30ae21fa2a2f2dbef4478 "pdflatex"
-  "learn.out" 1688086920 2179 32677470e3bc053612c05c036be82778 "pdflatex"
-  "learn.tex" 1688086918 42375 324f10b190498d39d73d78d78c5ef90a ""
+  "learn.aux" 1688097001 2501 eea3ce4be588db80818e61a8b671b393 "pdflatex"
+  "learn.out" 1688097001 2179 32677470e3bc053612c05c036be82778 "pdflatex"
+  "learn.tex" 1688096999 44478 a691bb322fd0931298e2eeb2baf3eecc ""
   (generated)
   "learn.aux"
   "learn.log"
