@@ -657,7 +657,20 @@ via $\hat{\boldsymbol{\mu}}$: a larger minibatch regularizes less due to the mor
 
 \subsection*{Residual Networks (ResNet) and ResNeXt}
 \section{Recurrent Neural Networks}
+\subsection{Working with Sequences}
 
+\begin{equation*}
+    \begin{aligned}
+        P(x_1, \ldots, x_T) = P(x_1) \prod_{t=2}^T P(x_t \mid x_{t-1}, \ldots, x_1).
+    \end{aligned}
+\end{equation*}
+
+\subsubsection*{Markov Models}
+\begin{equation*}
+    \begin{aligned}
+        P(x_1, \ldots, x_T) = P(x_1) \prod_{t=2}^T P(x_t \mid x_{t-1}).
+    \end{aligned}
+\end{equation*}
 \section{Modern Recurrent Neural Networks}
 
 \section{Attention Mechanisms and Transformers}
