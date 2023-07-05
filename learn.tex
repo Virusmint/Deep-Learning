@@ -24,6 +24,8 @@
 % Theorems and definitions
 \theoremstyle{definition}
 \newtheorem*{definition}{Definition}
+\newtheorem*{proposition}{Proposition}
+\newtheorem*{theorem}{Theorem}
 \pgfplotsset{width=10cm,compat=1.9}
 
 % Graph drawings
@@ -278,6 +280,10 @@ Generalization error ($R$) is an expectation taken with respect to the underlyin
         R[p,f] = E_{(\mathbf{x},y)\sim P[l(\mathbf{x},y,f(\mathbf{x})]} = \int\int l(\mathbf{x},y,f(\mathbf{x}))p(\mathbf{x},y)d\mathbf{x}dy
     \end{aligned}
 \end{equation*}
+We are essentially taking the average value of the loss function over all possible pairs of inputs $\mathbf{x}$ and labels $y$ sampled from
+the underlying distribution $P$, which amounts to integrating the loss function $l(\mathbf{x}, y f(\mathbf{x}))$ multiplied by the joint probability
+density function $p(\mathbf{x}, y)$ over the input space $\mathbf{x}$ and the label space $y$. 
+
 Note that we can never measure $R$ exactly since the density function $p(\mathbf{x},y)$ has a form that can almost never
 be precisely known. Moreover, since we cannot sample an infinite stream of data points, we must resort to estimating
 the generalization error by applying our model to an independent test set that is withheld from our training set.
@@ -810,29 +816,50 @@ concatenated and fed into an MLP with a single hidden layer using $\tanh$ as the
 Before convex analysis, we need to define \emph{convex} sets and \emph{convex} functions. They lead to mathematical tools that are commonly applied to machine learning.
 
 \subsubsection*{Convex Sets}
-\begin{equation*}
-    \begin{aligned}
-        \lambda  a + (1-\lambda)  b \in \mathcal{X} \text{ whenever } a, b \in \mathcal{X}.
-    \end{aligned}
-\end{equation*}
+\begin{definition}
+    A set $\mathcal{X}$ in a vector space $\mathbf{V}$ is \emph{convex} if for any $a,b \in \mathcal{X}$ and $\lambda \in [0, 1]$ we have
+    \begin{equation*}
+        \begin{aligned}
+            \lambda  a + (1-\lambda)  b \in \mathcal{X}
+        \end{aligned}
+    \end{equation*}
+\end{definition}
+
+Simply put, for any two vectors $a$ and $b$ in a convex set $\mathcal{X}$, the segment connecting $a$ and $b$ is also in $\mathcal{X}$.
+Notice also from this definition that any vector subspace of a vector space must be a convex set.
+
+\begin{proposition}
+    Let $\mathcal{X}, \mathcal{Y}$ be convex sets in a vector space. Then $\mathcal{X} \cap \mathcal{Y}$ is also convex.
+    \\[6pt]
+    The proof is trivial, and is left as an exercise.
+\end{proposition}
+
 
 \subsubsection*{Convex Functions}
 
 Now that we have convex sets we can introduce \emph{convex} functions $f$ . Given a \emph{convex} set $\mathcal{X}$, a function $f: \mathcal{X} \to \mathbb{R}$ is \emph{convex} if for all
-$x, x' \in \mathcal{X}$ and for all $\lambda \in [0, 1]$ we have
+$x_1, x_2 \in \mathcal{X}$ and for all $\lambda \in [0, 1]$ we have
 \begin{equation*}
     \begin{aligned}
-        \lambda f(x) + (1-\lambda) f(x') \geq f(\lambda x + (1-\lambda) x').
+        \lambda f(x_1) + (1-\lambda) f(x_2) \geq f(\lambda x_1 + (1-\lambda) x_2).
     \end{aligned}
 \end{equation*}
 
+Let's have a look at a few examples to build some intuition around this definition.
+Consider the following function $f : \R \to \R$
+Weighted Average!!!
+
 \subsubsection*{Jensen's Inequality}
-Given a convex function $f$, one of the most useful mathematical tools is \emph{Jensen's inequality}. It amounts to a generalization of the definition of convexity:
-\begin{equation*}
-    \begin{aligned}
-        \sum_i \alpha_i f(x_i)  \geq f\left(\sum_i \alpha_i x_i\right)    \text{ and }    E_X[f(X)]  \geq f\left(E_X[X]\right),
-    \end{aligned}
-\end{equation*}
+Given a convex function $f$, one of the most useful mathematical tools is \emph{Jensen's inequality}. It amounts to a generalization of the definition of convexity.
+\begin{theorem}[Jensen's Inequality]
+    Let $f$ be a convex function
+    \begin{equation*}
+        \begin{aligned}
+            \sum_i \alpha_i f(x_i)  \geq f\left(\sum_i \alpha_i x_i\right)    \text{ and }    E_X[f(X)]  \geq f\left(E_X[X]\right),
+        \end{aligned}
+    \end{equation*}
+\end{theorem}
+
 where $\alpha_i$ are nonnegative real numbers such that $\sum_i \alpha_i = 1$ and $X$ is 
 a random variable. In other words, the expectation of a convex function is no less than 
 the convex function of an expectation, where the latter is usually a simpler expression. 
@@ -845,16 +872,21 @@ log-likelihood of partially observed random variables. That is, we use
 
 \begin{equation*}
     \begin{aligned}
-        E_{Y \sim P(Y)}[-\log P(X \mid Y)] \geq -\log P(X),
+        E_{Y \sim P(Y)}[-\log P(X \mid Y)] &\geq -\log(E_{Y \sim P(Y)}[P(X \mid Y)])  \\
+                                           &= -\log \int P(Y) P(X \mid Y) \,dY \\
+                                           &= -\log(P(X)) \\
     \end{aligned}
 \end{equation*}
+This can be used in variational methods. Here $Y$ is typically the unobserved random variable, $P(Y)$ is the best guess of how it might be distributed, and $P(X)$ 
+is the distribution with $Y$ integrated out. For instance, in clustering $Y$ might be the cluster labels and $P(X \mid Y)$ is the generative model when applying cluster labels.
 
-
-
-
-
-
-
+\begin{proposition}
+    The \emph{local minima} of convex functions are also the \emph{global minima}.
+    \begin{proof}
+        Consider the convex function $f: \mathcal{X} \to \R$ defined over the convex set $\mathcal{X}$
+        
+    \end{proof}
+\end{proposition}
 
 \newpage
 \subsection*{Miscellaneous}
