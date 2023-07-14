@@ -885,7 +885,7 @@ is the distribution with $Y$ integrated out. For instance, in clustering $Y$ mig
         Let $x^{\ast} \in \mathcal{X}$ be a local minimum: there exists some $p > 0$ for which any
         $x \in \mathcal{X}$ that satisfies $0 < |x - x^{\ast}| \leq p$ has the property $f(x) \geq f(x^*)$.
 
-        Suppose there is a global minimum $x_0 \in \mathcal{X}$ that is not the local minimum such that
+        Suppose $x^{\ast}$ is not the global minimum: there exists some $x_0 \in \mathcal{X}$ such that
         $f(x_0) < f(x^{\ast})$.
         Then for any $\lambda \in [0, 1)$ we have:
         \begin{align*}
@@ -894,7 +894,9 @@ is the distribution with $Y$ integrated out. For instance, in clustering $Y$ mig
                                 & = f(x^\ast)
         \end{align*}
 
-        Take
+        Choosing any $\lambda$ such that $0 < |\lambda x^{\ast} + (1-\lambda) x' - x^{\ast}| \leq p$ will contradict 
+        our assumption that $x^{\ast}$ is not the global minimum. Hence, there does not exist $x' \in \mathcal{X}$ for
+        which $f(x') < f(x^{\ast})$.
 
     \end{proof}
 \end{proposition}
