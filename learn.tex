@@ -897,28 +897,49 @@ is the distribution with $Y$ integrated out. For instance, in clustering $Y$ mig
         Choosing any $\lambda$ such that $0 < |\lambda x^{\ast} + (1-\lambda) x' - x^{\ast}| \leq p$ will contradict 
         our assumption that $x^{\ast}$ is not the global minimum. Hence, there does not exist $x' \in \mathcal{X}$ for
         which $f(x') < f(x^{\ast})$.
-
     \end{proof}
 \end{proposition}
 
 \begin{proposition}
-    Define \emph{below sets}
-
+    Let $f$ be a convex function over a convex set $\mathcal{X}$. Define a \emph{below set} of $\mathcal{X}$ as
     \begin{align*}
         \mathcal{S}_b \stackrel{\mathrm{def}}{=} \{x | x \in \mathcal{X} \text{ and } f(x) \leq b\}
     \end{align*}
-
-
-    Then,
-    $\mathcal{S}_b$ is a convex set
+    Then, $\mathcal{S}_b$ is a convex set
+    \begin{proof}
+        Recall that for any $x_1, x_2 \in \mathcal{S}_b$ and $\lambda \in [0, 1]$, we must show that $\lambda x + (1-\lambda) x' \in \mathcal{S}_b$.
+        Since $f(x_1) \leq b$ and $f(x_2) \leq b$, by definition of convexity we get
+        \begin{align*}
+            f(\lambda x + (1-\lambda) x') \leq \lambda f(x) + (1-\lambda) f(x') \leq \lambda b + (1-\lambda) b = b.
+        \end{align*}
+    \end{proof}
 \end{proposition}
+
+\subsubsection*{Convexity and Second Derivatives}
+
+\begin{theorem}
+    Let $f$ be a convex function over a convex set $\mathcal{X}$. Define a \emph{below set} of $\mathcal{X}$ as
+    \begin{align*}
+        \mathcal{S}_b \stackrel{\mathrm{def}}{=} \{x | x \in \mathcal{X} \text{ and } f(x) \leq b\}
+    \end{align*}
+    Then, $\mathcal{S}_b$ is a convex set
+    \begin{proof}
+        Recall that for any $x_1, x_2 \in \mathcal{S}_b$ and $\lambda \in [0, 1]$, we must show that $\lambda x + (1-\lambda) x' \in \mathcal{S}_b$.
+        Since $f(x_1) \leq b$ and $f(x_2) \leq b$, by definition of convexity we get
+        \begin{align*}
+            f(\lambda x + (1-\lambda) x') \leq \lambda f(x) + (1-\lambda) f(x') \leq \lambda b + (1-\lambda) b = b.
+        \end{align*}
+    \end{proof}
+\end{theorem}
+
+
 
 \newpage
 \subsection*{Miscellaneous}
 
-
 \section{Appendix: Mathematics for Deep Learning}
 \subsection{Maximum Likelihood}
+\subsection{Multivariable Calculus}
 
 
 \end{document}
