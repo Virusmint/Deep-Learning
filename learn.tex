@@ -780,7 +780,7 @@ Then the batch matrix multiplication (BMM) computes the element-wise product
 \end{align*}
 
 
-\subsection*{Scaled Dot-Product Attention}
+\subsubsection*{Scaled Dot-Product Attention}
 In practice, we often think in minibatches for efficiency, such as computing attention for $n$ queries and $m$ key-value pairs, where queries and keys are of length $d$
 and values are of length $v$. The scaled dot-product attention of queries $\mathbf Q\in\mathbb R^{n\times d}$, keys $\mathbf K\in\mathbb R^{m\times d}$,
 and values $\mathbf V\in\mathbb R^{m\times v}$ thus can be written as
@@ -932,8 +932,10 @@ is the distribution with $Y$ integrated out. For instance, in clustering $Y$ mig
     \end{proof}
 \end{theorem}
 
-
-
+\subsection{Gradient Descent}
+\begin{align*}
+    f(x + \epsilon) = f(x) + \epsilon f'(x) + \mathcal{O}(\epsilon^2).
+\end{align*}
 \newpage
 \subsection*{Miscellaneous}
 
