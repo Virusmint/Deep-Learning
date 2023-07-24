@@ -673,6 +673,20 @@ via $\hat{\boldsymbol{\mu}}$: a larger minibatch regularizes less due to the mor
     P(x_1, \ldots, x_T) = P(x_1) \prod_{t=2}^T P(x_t \mid x_{t-1}).
 \end{align*}
 
+\subsection{Language Models}
+\subsubsection*{Laplace Smoothing}
+\begin{align*}
+    \hat{P}(x) & = \frac{n(x) + \epsilon_1/m}{n + \epsilon_1}, \\
+    \hat{P}(x' \mid x) & = \frac{n(x, x') + \epsilon_2 \hat{P}(x')}{n(x) + \epsilon_2}, \\
+    \hat{P}(x'' \mid x,x') & = \frac{n(x, x',x'') + \epsilon_3 \hat{P}(x'')}{n(x, x') + \epsilon_3}.
+\end{align*}
+\subsubsection*{Perplexity}
+\begin{align*}
+    \frac{1}{n} \sum_{t=1}^n -\log P(x_t \mid x_{t-1}, \ldots, x_1),
+\end{align*}
+\begin{align*}
+    \exp\left(-\frac{1}{n} \sum_{t=1}^n \log P(x_t \mid x_{t-1}, \ldots, x_1)\right).
+\end{align*}
 \section{Modern Recurrent Neural Networks}
 
 \section{Attention Mechanisms and Transformers}
@@ -910,7 +924,7 @@ is the distribution with $Y$ integrated out. For instance, in clustering $Y$ mig
         Recall that for any $x_1, x_2 \in \mathcal{S}_b$ and $\lambda \in [0, 1]$, we must show that $\lambda x + (1-\lambda) x' \in \mathcal{S}_b$.
         Since $f(x_1) \leq b$ and $f(x_2) \leq b$, by definition of convexity we get
         \begin{align*}
-            f(\lambda x + (1-\lambda) x') \leq \lambda f(x) + (1-\lambda) f(x') \leq \lambda b + (1-\lambda) b = b.
+            f(\lambda x_1 + (1-\lambda) x_2) \leq \lambda f(x_1) + (1-\lambda) f(x_2) \leq \lambda b + (1-\lambda) b = b.
         \end{align*}
     \end{proof}
 \end{proposition}
