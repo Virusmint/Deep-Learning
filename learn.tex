@@ -687,6 +687,30 @@ via $\hat{\boldsymbol{\mu}}$: a larger minibatch regularizes less due to the mor
 \begin{align*}
     \exp\left(-\frac{1}{n} \sum_{t=1}^n \log P(x_t \mid x_{t-1}, \ldots, x_1)\right).
 \end{align*}
+
+\begin{itemize}
+\item In the best case scenario, the model always perfectly estimates the probability of the target token as 1. 
+In this case the perplexity of the model is 1.
+
+\item In the worst case scenario, the model always predicts the probability of the target token as 0. 
+In this situation, the perplexity is positive infinity.
+
+\item At the baseline, the model predicts a uniform distribution over all the available tokens of the vocabulary. 
+In this case, the perplexity equals the number of unique tokens of the vocabulary. To see that this is true, suppose we have $m$
+unique tokens in our vocabulary. Then
+
+\begin{align*}
+    & \exp\left(-\frac{1}{n} \sum_{t=1}^n \log \frac{1}{m} \right) \\
+    &= \exp\left(\frac{1}{n} \log m^n \right) \\
+    &= m
+\end{align*}
+
+In fact, if we were to store the 
+sequence without any compression, this would be the best we could do to encode it. Hence, this provides a nontrivial 
+upper bound that any useful model must beat.
+
+\end{itemize}
+
 \section{Modern Recurrent Neural Networks}
 
 \section{Attention Mechanisms and Transformers}
