@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.1.25)  25 JUL 2023 22:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.1.25)  26 JUL 2023 15:29
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -846,23 +846,23 @@ Overfull \hbox (17.5447pt too wide) in paragraph at lines 798--801
 []\OT1/cmr/m/n/12 Since we do not want blanks in our at-ten-tion model we sim-ply need to limit $[][] \OML/cmm/m/it/12 \OT1/cmr/m/n/12 (\OT1/cmr/bx/n/12 q\OML/cmm/m/it/12 ; \OT1/cmr/bx/n/12 k[]\OT1/cmr/m/n/12 )\OT1/cmr/bx/n/12 v[]$
  []
 
-[16] [17] [18] [19] [20] (./learn.aux)
+[16] [17] [18] [19] [20] [21] [22] (./learn.aux)
 Package rerunfilecheck Info: File `learn.out' has not changed.
 (rerunfilecheck)             Checksum: 213A91D72635A3ACDCD29B6554274BFA;5234.
  ) 
 Here is how much of TeX's memory you used:
- 41472 strings out of 478287
- 975459 string characters out of 5850749
+ 41477 strings out of 478287
+ 975506 string characters out of 5850749
  1368097 words of memory out of 5000000
  58912 multiletter control sequences out of 15000+600000
  484529 words of font info for 83 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  115i,12n,118p,767b,1005s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/texlive/2021/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}<c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on learn.pdf (20 pages, 250590 bytes).
+Output written on learn.pdf (22 pages, 255021 bytes).
 PDF statistics:
- 391 PDF objects out of 1000 (max. 8388607)
- 333 compressed objects within 4 object streams
- 118 named destinations out of 1000 (max. 500000)
+ 403 PDF objects out of 1000 (max. 8388607)
+ 343 compressed objects within 4 object streams
+ 123 named destinations out of 1000 (max. 500000)
  245 words of extra memory for PDF output out of 10000 (max. 10000000)
 

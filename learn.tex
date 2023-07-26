@@ -974,8 +974,6 @@ is the distribution with $Y$ integrated out. For instance, in clustering $Y$ mig
 \begin{align*}
     f(x + \epsilon) = f(x) + \epsilon f'(x) + \mathcal{O}(\epsilon^2).
 \end{align*}
-\newpage
-\subsection*{Miscellaneous}
 
 \section{Appendix: Mathematics for Deep Learning}
 \subsection{Geometry and Linear Algebraic Operations}
@@ -984,5 +982,50 @@ is the distribution with $Y$ integrated out. For instance, in clustering $Y$ mig
 \subsection{Multivariable Calculus}
 \subsection{Maximum Likelihood}
 \subsection{Information Theory}
+\subsubsection*{Surprise}
+https://www.youtube.com/watch?v=YtebGVx-Fxw
+\subsubsection*{Entropy}
+    We can interpret entropy as the average amount of surprise from observing $X$
+\begin{definition}
+    For any random variable $X$ that follows a probability distribution $P$ 
+    with a probability density function (p.d.f.) or a probability mass function (p.m.f.), 
+    we measure the expected amount of information through entropy (or Shannon entropy)
+    \begin{align*}
+        H(X) = - E_{x \sim P} [\log p(x)].
+    \end{align*}
+    More specifically, if $X$ is discrete,
+    \begin{align*}
+        H(X) = - \sum_i p_i \log p_i \text{, where } p_i = P(X_i).
+    \end{align*}
+    Otherwise, if $X$ is continuous, we also refer entropy as \emph{differential entropy}
+    \begin{align*}
+        H(X) = - \int_x p(x) \log p(x) \; dx.
+    \end{align*}
+\end{definition}
+
+\subsubsection*{Properties of Entropy}
+\begin{itemize}
+    \item $H(X) \geq 0$ for all discrete $X$ (entropy can be negative for continuous $X$).
+    \item If $X \sim P$ with a p.d.f. or a p.m.f. $p(x)$, and we try to estimate $P$ by A
+    new probability distribution $Q$ with a p.d.f. or a p.m.f. $q(x)$, then
+    \begin{align*}
+        H(X) = - E_{x \sim P} [\log p(x)] \leq  - E_{x \sim P} [\log q(x)], \text{ with equality if and only if } P = Q.
+    \end{align*}
+    Alternatively, $H(X)$ gives a lower bound of the average number of bits needed to 
+    encode symbols drawn from $P$.
+    \item If $X \sim P$, then $x$ conveys the maximum amount of inforrmation if it spreads
+    evenly among all possible outcomes. Specifically, if the probability distribution $P$ 
+    is discrete with $k$-class $\{p_1, \ldots, p_k \}$, then
+    \begin{align*}
+        H(X) \leq \log(k), \text{ with equality if and only if } p_i = \frac{1}{k}, \forall i.
+    \end{align*}
+    If $P$ is a continuous random variable, then the story becomes much more complicated. 
+    However, if we additionally impose that $P$ is supported on a finite interval 
+    (with all values between $0$ and $1$), then $P$ has the highest entropy if it is the 
+    uniform distribution on that interval.
+\end{itemize}
+
+\newpage
+\subsection*{Miscellaneous}
 
 \end{document}
