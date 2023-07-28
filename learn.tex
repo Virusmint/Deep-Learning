@@ -1041,6 +1041,39 @@ https://www.youtube.com/watch?v=YtebGVx-Fxw
         H(X, Y) = - \int_{x, y} p_{X, Y}(x, y) \ \log p_{X, Y}(x, y) \;dx \;dy.
     \end{align*}
 \end{definition}
+As a pair of extremes, if $X = Y$ are two identical random variables, then the information 
+in the pair is exactly the information in one and we have $H(X, Y) = H(X) = H(Y)$. On the
+other extreme, if $X$ and $Y$ are independent then $H(X,Y) = H(X) + H(Y)$. Indeed we will 
+always have that the information contained in a pair of random variables is no smaller than 
+the entropy of either random variable and no more than the sum of both.
+\begin{align*}
+    H(X), H(Y) \le H(X, Y) \le H(X) + H(Y).
+\end{align*}
+
+\subsubsection*{Conditional Entropy}
+\begin{definition}
+    We define the \emph{conditional entropy} $H(Y \mid X)$ as
+    \begin{align*}
+        H(Y \mid X) = - E_{(x, y) \sim P} [\log p(y \mid x)],
+    \end{align*}
+    where $p(y \mid x) = \frac{p_{X, Y}(x, y)}{p_X(x)}$ is the conditional probability. 
+    Specifically, if $(X, Y)$ is a pair of discrete random variables, then
+    \begin{align*}
+        H(Y \mid X) = - \sum_{x} \sum_{y} p(x, y) \log p(y \mid x).
+    \end{align*}
+    If $(X,Y)$ is a pair of continuous random variables, then the \emph{differential conditional entropy} 
+    is similarly defined as
+    \begin{align*}
+        H(Y \mid X) = - \int_x \int_y p(x, y) \ \log p(y \mid x) \;dx \;dy.
+    \end{align*}
+    Interestingly, we can relate the \emph{conditional entropy} $H(Y \mid X)$ to the
+    entropy $H(X)$ and the joint entropy $H(X, Y)$ via
+
+    \begin{align*}
+        H(Y \mid X) = H(X, Y) - H(X).
+    \end{align*}
+\end{definition}
+
 
 \newpage
 \subsection*{Miscellaneous}
