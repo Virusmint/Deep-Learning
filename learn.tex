@@ -1074,6 +1074,43 @@ the entropy of either random variable and no more than the sum of both.
     \end{align*}
 \end{definition}
 
+\subsubsection*{Kullback-Leibler Divergence}
+\begin{definition}
+    Given a random variable $X$ that follows the probability distribution $P$ with a p.d.f. or a p.m.f. $p(x)$, 
+    and we estimate $P$ by another probability distribution $Q$ with a p.d.f. or a p.m.f. $q(x)$. Then the 
+    \emph{Kullback-Leibler (KL) divergence} (or \emph{relative entropy}) between $P$ and $Q$ is 
+    \begin{align*}
+        D_{\mathrm{KL}}(P\|Q) = E_{x \sim P} \left[ \log \frac{p(x)}{q(x)} \right].
+    \end{align*}
+\end{definition}
+
+\subsubsection*{KL Divergence Properties}
+\begin{itemize}
+    \item KL divergence is non-symmetric, i.e., there are $P, Q$ such that
+    \begin{align*}
+        D_{\mathrm{KL}}(P\|Q) \neq D_{\mathrm{KL}}(Q\|P).
+    \end{align*}
+    \item KL divergence is non-negative, i.e.,
+    \begin{align*}
+        D_{\mathrm{KL}}(P\|Q) \geq 0.
+    \end{align*}
+    \begin{proof}
+        \begin{align*}
+            D_{\mathrm{KL}}(P\|Q) &= E_{x \sim P} \left[ \log \frac{p(x)}{q(x)} \right] \\
+                                  &= -E_{x \sim P} \left[ \log \frac{q(x)}{p(x)} \right] \\
+                                  &\geq -\log E_{x \sim P} \left[ \frac{q(x)}{p(x)} \right] \\
+        \end{align*}
+        Hence,
+        \begin{align*}
+            D_{\mathrm{KL}}(P\|Q) &\geq 0. \\
+        \end{align*}
+
+    \end{proof}
+    Note that the equality holds only when $P = Q$.
+\end{itemize}
+
+
+
 
 \newpage
 \subsection*{Miscellaneous}
