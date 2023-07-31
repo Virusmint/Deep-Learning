@@ -1068,12 +1068,38 @@ the entropy of either random variable and no more than the sum of both.
     \end{align*}
     Interestingly, we can relate the \emph{conditional entropy} $H(Y \mid X)$ to the
     entropy $H(X)$ and the joint entropy $H(X, Y)$ via
-
     \begin{align*}
         H(Y \mid X) = H(X, Y) - H(X).
     \end{align*}
+
 \end{definition}
 
+\subsubsection*{Mutual Information}
+
+\begin{align*}
+    I(X, Y) = H(X, Y) - H(Y \mid X) - H(X \mid Y).
+\end{align*}
+\begin{align*}
+    I(X, Y) = E_{x} E_{y} \left\{ p_{X, Y}(x, y) \log\frac{p_{X, Y}(x, y)}{p_X(x) p_Y(y)} \right\}. 
+\end{align*}
+
+\subsubsection*{Properties of Mutual Information}
+\begin{itemize}
+    \item Mutual information is symmetric, i.e., $I(X, Y) = I(Y, X)$.
+    \item Mutual information is non-negative, i.e., $I(X, Y) \geq 0$ 
+    \item  $I(X, Y) = 0$ if and only if $X$ and $Y$ are independent. For example, 
+    if $X$ and $Y$ are independent, then knowing $Y$ does not give any information 
+    about $X$ and vice versa, so their mutual information is zero.
+    \item Alternatively, if $X$ is an invertible function of $Y$, then $X$ and $Y$ 
+    share all information and
+    \begin{align*}
+        I(X, Y) = H(Y) = H(X).
+    \end{align*}
+\end{itemize}
+\subsubsection*{Pointwise Mutual Information}
+\begin{align*}
+    \mathrm{pmi}(x, y) = \log\frac{p_{X, Y}(x, y)}{p_X(x) p_Y(y)}.
+\end{align*}
 \subsubsection*{Kullback-Leibler Divergence}
 \begin{definition}
     Given a random variable $X$ that follows the probability distribution $P$ with a p.d.f. or a p.m.f. $p(x)$, 
@@ -1104,10 +1130,20 @@ the entropy of either random variable and no more than the sum of both.
         \begin{align*}
             D_{\mathrm{KL}}(P\|Q) &\geq 0. \\
         \end{align*}
-
     \end{proof}
     Note that the equality holds only when $P = Q$.
+    \item If there exists an $x$ such that $p > 0$ and $q = 0$, 
+    then $D_{\mathrm{KL}}(P\|Q) = \infty$.
+    \item There is a close relationship between KL divergence and mutual information. 
+    $I(X,Y)$ is also numerically equivalent with the following terms:
+    \begin{enumerate}
+        \item $D_{\mathrm{KL}}(P(X, Y) \ \| \ P(X)P(Y))$
+        \item $E_Y \{ D_{\mathrm{KL}}(P(X \mid Y) \ \| \ P(X)) \}$
+        \item $E_X \{ D_{\mathrm{KL}}(P(Y \mid X) \ \| \ P(Y)) \}$
+    \end{enumerate}
 \end{itemize}
+
+\subsubsection*{Cross-Entropy}
 
 
 
