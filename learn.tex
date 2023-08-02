@@ -1144,8 +1144,20 @@ the entropy of either random variable and no more than the sum of both.
 \end{itemize}
 
 \subsubsection*{Cross-Entropy}
-
-
+\begin{definition}
+    Like KL divergence, for a random variable $X$, we can also 
+    measure the divergence between the estimating distribution 
+    $Q$ and the true distribution $P$ via \emph{cross-entropy},
+    \begin{align*}
+        \mathrm{CE}(P, Q) = - E_{x \sim P} [\log(q(x))].
+    \end{align*}
+    By using properties of entropy discussed above, we can also 
+    interpret it as the summation of the entropy $H(P)$ and the KL 
+    divergence between $P$ and $Q$, i.e.,
+    \begin{align*}
+        \mathrm{CE} (P, Q) = H(P) + D_{\mathrm{KL}}(P\|Q).
+    \end{align*}
+\end{definition}
 
 
 \newpage
