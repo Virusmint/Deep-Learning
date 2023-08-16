@@ -111,7 +111,7 @@ A norm is a function $||\cdot||$ that maps a vector to a scalar and satisfies th
     \item For any vectors $\mathbf{x}$ and $\mathbf{y}$, norms must satisfy the triangle inequality:
 
           \begin{align*}
-              ||\mathbf{x} + \mathbf{y}|| = ||\mathbf{x}|| + ||\mathbf{y}||
+              ||\mathbf{x} + \mathbf{y}|| \leq ||\mathbf{x}|| + ||\mathbf{y}||
           \end{align*}
 
     \item The norm of a vector is nonnegative and vanishes if and only if the vector is zero:
@@ -645,12 +645,24 @@ batch normalization works best for moderate minibatches sizes in the $50 \sim 10
 range. This particular size of minibatch seems to inject just the “right amount” of noise per layer, both in terms of scale via $\hat{\boldsymbol{\sigma}}$, and in terms of offset
 via $\hat{\boldsymbol{\mu}}$: a larger minibatch regularizes less due to the more stable estimates, whereas tiny minibatches destroy useful signal due to high variance.
 
-\subsection*{Layer Normalization}
-
 \subsubsection*{Fully Connected Layers}
 
 \begin{align*}
     \mathbf{h} = \phi(\mathrm{BN}(\mathbf{W}\mathbf{x} + \mathbf{b}) ).
+\end{align*}
+
+
+\subsection*{Layer Normalization}
+Contrary to batch normalization, \emph{layer normalization} is only applied to one observation at a time.
+Consequently both the offset and the scaling factor are scalars. For an $n$-dimensional vector $x$, 
+layer norms are given by
+\begin{align*}
+    \mathbf{x} \rightarrow \textrm{LN}(\mathbf{x}) =  \frac{\mathbf{x} - \hat{\mu}}{\hat\sigma},
+\end{align*}
+where scaling and offset are applied coefficient-wise and given by
+\begin{align*}
+    \hat{\mu} \stackrel{\textrm{def}}{=} \frac{1}{n} \sum_{i=1}^n x_i \textrm{ and }
+    \hat{\sigma}^2 \stackrel{\textrm{def}}{=} \frac{1}{n} \sum_{i=1}^n (x_i - \hat{\mu})^2 + \epsilon.
 \end{align*}
 
 
@@ -714,6 +726,9 @@ upper bound that any useful model must beat.
 
 \subsubsection*{Gradient Clipping}
 
+\begin{align*}
+    \mathbf{g} \leftarrow \min\left(1, \frac{\theta}{\|\mathbf{g}\|}\right) \mathbf{g}.
+\end{align*}
 
 \section{Modern Recurrent Neural Networks}
 
