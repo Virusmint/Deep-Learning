@@ -14,7 +14,7 @@ Self-Learning Journey on Deep Learning
   - [ ] 2.7 Documentation
 - 3. Linear Neural Networks for Regression
   - [ ] 3.1 Linear Regression
-  - [ ] 3.2 Object-Oriented Design for Implementation
+  - [x] 3.2 Object-Oriented Design for Implementation
   - [ ] 3.3 Synthetic Regression Data
   - [ ] 3.4 Linear Regression Implementation from Scratch
   - [ ] 3.5 Concise Implementation of Linear Regression
