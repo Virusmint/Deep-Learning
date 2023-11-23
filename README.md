@@ -58,3 +58,6 @@ Self-Learning Journey on Deep Learning
 - 11. Attention Mechanisms
   - [ ] 11.1 Queries, Keys, amd Values
   - [ ] 11.2 Attention Pooling by Similarity
+
+- 22. Mathematics Appendix
+  - [x] 22.7 Maximum Likelihood Estimation
