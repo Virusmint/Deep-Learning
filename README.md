@@ -1,5 +1,5 @@
 # Deep-Learning
-Self-Learning Journey on Deep Learning
+Self-Learning Journey on Deep Learning. Based on the book d2l.ai
 
 ### Exercises Checklist
 - 1. Introduction
